@@ -8,7 +8,26 @@
     mc:Ignorable="d"
     Title="No Bnads Please"
     Height="450"
-    Width="800">
+    Width="800"
+    Background="DarkBlue"
+    WindowStyle="None"
+    BorderThickness="0">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="File"/>
+            <MenuItem Header="Help"/>
+        </Menu>
+
+        <StatusBar Grid.Row="2" >
+            <StatusBarItem>
+                <TextBlock Text="Ready"/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </base:FroggoMainWindow>
