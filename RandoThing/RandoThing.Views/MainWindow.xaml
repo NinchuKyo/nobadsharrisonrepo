@@ -21,6 +21,14 @@
             <MenuItem Header="Help"/>
         </Menu>
 
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button Height="80" Width="160" Margin="40" Content="Teams"/>
+            <Button Height="80" Width="160" Margin="40" Content="Civs"/>
+            <Button Height="80" Width="160" Margin="40" Content="Maps"/>
+        </StackPanel>
+
         <StatusBar Grid.Row="2" >
             <StatusBarItem>
                 <TextBlock Text="Ready"/>
