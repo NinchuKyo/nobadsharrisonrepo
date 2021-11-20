@@ -3,6 +3,7 @@ using FroggoBase.Views;
 using RandoThing.ViewModels;
 using RandoThing.Views;
 using System;
+using System.Windows;
 
 namespace RandoThing
 {
@@ -19,7 +20,10 @@ namespace RandoThing
         [STAThread]
         public static int Main(string[] args)
         {
-            FroggoApp app = new RandoThingApp();
+            FroggoApp app = new RandoThingApp
+            {
+                ShutdownMode = ShutdownMode.OnMainWindowClose
+            };
 
             FroggoMainWindow mainWindow = new MainWindow
             {
