@@ -1,4 +1,5 @@
 ﻿using FroggoBase.ViewModels.Implementation;
+using FroggoBase.ViewModels.Interface;
 
 namespace RandoThing.ViewModels
 {
@@ -10,6 +11,7 @@ namespace RandoThing.ViewModels
     /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
+        private IViewModel _currentViewModel;
         #region Constructors
 
         /// <summary>
@@ -18,8 +20,11 @@ namespace RandoThing.ViewModels
         public MainWindowViewModel()
             : base()
         {
+            CurrentViewModel = new TeamsViewViewModel();
         }
 
         #endregion // Constructors
+        
+        public IViewModel CurrentViewModel { get => _currentViewModel; set => _currentViewModel = value; }
     }
 }

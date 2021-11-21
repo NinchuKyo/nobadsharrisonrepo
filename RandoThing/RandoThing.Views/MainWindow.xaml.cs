@@ -1,4 +1,5 @@
 ﻿using FroggoBase.Views;
+using RandoThing.ViewModels;
 
 namespace RandoThing.Views
 {
@@ -10,6 +11,8 @@ namespace RandoThing.Views
         public MainWindow()
         {
             this.InitializeComponent();
+
+            DataContext = new MainWindowViewModel();
         }
     }
 }

@@ -38,6 +38,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TeamsView.xaml.cs">
+      <DependentUpon>TeamsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -51,11 +54,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TeamsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BaseLibs\FroggoBase.Views\FroggoBase.Views.csproj">
       <Project>{1902bde5-6df5-4656-97cb-346074387aa2}</Project>
       <Name>FroggoBase.Views</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RandoThing.ViewModels\RandoThing.ViewModels.csproj">
+      <Project>{2F7FBBC0-D9D5-4627-8B0E-3A30AFD9FE77}</Project>
+      <Name>RandoThing.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

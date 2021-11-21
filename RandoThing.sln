@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandoThing", "RandoThing\RandoThing\RandoThing.csproj", "{0A50B2F4-C6FB-4ED2-9F20-60B6A509B1F7}"
 EndProject
@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandoThing.Models", "RandoThing\RandoThing.Models\RandoThing.Models.csproj", "{E67B9B16-AD4C-4870-AA0C-D3774CF25D5F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandoThing.Views", "RandoThing\RandoThing.Views\RandoThing.Views.csproj", "{90D2D243-8C39-4091-B59A-D1D78C6759A0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{692DB4DA-A3E4-402F-B3DB-2B6E2EB417CA} = {692DB4DA-A3E4-402F-B3DB-2B6E2EB417CA}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{175BA52B-569C-4A53-BFAA-2F8ECE50B7A1}"
 EndProject
