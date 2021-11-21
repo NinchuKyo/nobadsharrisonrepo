@@ -60,6 +60,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BaseLibs\FroggoBase.ViewModels\FroggoBase.ViewModels.csproj">
+      <Project>{692db4da-a3e4-402f-b3db-2b6e2eb417ca}</Project>
+      <Name>FroggoBase.ViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BaseLibs\FroggoBase.Views\FroggoBase.Views.csproj">
       <Project>{1902bde5-6df5-4656-97cb-346074387aa2}</Project>
       <Name>FroggoBase.Views</Name>
