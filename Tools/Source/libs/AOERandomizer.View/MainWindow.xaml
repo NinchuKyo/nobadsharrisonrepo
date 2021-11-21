@@ -1,0 +1,339 @@
+﻿<Window x:Class="AOERandomizer.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:AOERandomizer.View.Converters"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="CanMinimize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Height="750"
+        Width="1450"
+        Cursor="/AOERandomizer.Multimedia;component/Resources/Cursors/arrow.cur"
+        Icon="/AOERandomizer.Multimedia;component/Resources/Images/froggo_icon.ico"
+        MouseDown="MainWindow_MouseDown"
+        Loaded="MainWindow_Loaded">
+    <Window.Resources>
+        <converters:ScrollLimitConverter x:Key="ScrollLimitConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+
+        <ImageBrush x:Key="UpArrow_Default" ImageSource="/AOERandomizer.Multimedia;component/Resources/Images/ScrollBar/Up_Arrow_Default.png"/>
+        <ImageBrush x:Key="DownArrow_Default" ImageSource="/AOERandomizer.Multimedia;component/Resources/Images/ScrollBar/Down_Arrow_Default.png"/>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}"/>
+                    <Setter Property="Margin" Value="10"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Grid Cursor="/AOERandomizer.Multimedia;component/Resources/Cursors/arrow.cur">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="1"
+                        CornerRadius="20"
+                        Width="20"
+                        Margin="5"
+                        Background="#664D0168" />
+
+                <RepeatButton x:Name="rb_Up"
+                              Grid.Row="0"
+                              Focusable="False"
+                              Command="ScrollBar.LineUpCommand"
+                              Background="{StaticResource UpArrow_Default}"
+                              Style="{StaticResource ScrollBar_UpArrow}"/>
+
+                <RepeatButton x:Name="rb_Down"
+                              Grid.Row="2"
+                              Focusable="False"
+                              Command="ScrollBar.LineDownCommand"
+                              Background="{StaticResource DownArrow_Default}"
+                              Style="{StaticResource ScrollBar_DownArrow}"/>
+
+                <Track x:Name="PART_Track"
+                       Grid.Row="1"
+                       ViewportSize="NaN"
+                       IsDirectionReversed="True">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="ScrollBar.PageUpCommand"
+                                      Style="{StaticResource ScrollBar_Track}"/>
+                    </Track.DecreaseRepeatButton>
+
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource ScrollBar_Thumb}"/>
+                    </Track.Thumb>
+
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="ScrollBar.PageDownCommand"
+                                      Style="{StaticResource ScrollBar_Track}"/>
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}, Path=VerticalOffset}" Value="0">
+                    <Setter TargetName="rb_Up" Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource ScrollLimitConverter}">
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}" Path="VerticalOffset"/>
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}" Path="ScrollableHeight"/>
+                        </MultiBinding>
+                    </DataTrigger.Binding>
+
+                    <Setter TargetName="rb_Down" Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid>
+        <Border BorderThickness="5"
+                CornerRadius="50">
+            <Border.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF616161"/>
+                    <GradientStop Color="#FF682B00" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Background>
+                <VisualBrush>
+                    <VisualBrush.Visual>
+                        <MediaElement 
+                            x:Name="backgroundVideo"
+                            LoadedBehavior="Manual"
+                            Loaded="BackgroundVideo_Loaded"
+                            MediaEnded="BackgroundVideo_MediaEnded"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+
+            </Border.Background>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="0"
+                            Grid.ColumnSpan="2"
+                            Margin="5">
+                    <Image Height="120"
+                           Width="1000"
+                           HorizontalAlignment="Center"
+                           Source="/AOERandomizer.Multimedia;component/Resources/Images/froggo_title.png" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Top"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Margin="5">
+                    <Button Margin="4"
+                            BorderThickness="0"
+                            Width="50"
+                            Height="50"
+                            Click="SettingsButton_Click">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+
+                                            <Border x:Name="border">
+                                                <Grid>
+                                                    <Image x:Name="buttonImg"
+                                                           Source="/AOERandomizer.Multimedia;component/Resources/Images/settings_button.png"
+                                                           Stretch="UniformToFill"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/settings_button_hovered.png" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="true">
+                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/settings_button_pressed.png" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Margin="4"
+                            BorderThickness="0"
+                            Width="45"
+                            Height="45"
+                            Click="Minimize_Button_Click">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+
+                                            <Border x:Name="border">
+                                                <Grid>
+                                                    <Image x:Name="buttonImg"
+                                                           Source="/AOERandomizer.Multimedia;component/Resources/Images/minimize_button.png"
+                                                           Stretch="UniformToFill"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/minimize_button_hovered.png" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="true">
+                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/minimize_button_pressed.png" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Margin="4"
+                            BorderThickness="0"
+                            Width="50"
+                            Height="50"
+                            Click="Close_Button_Click">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+
+                                            <Border x:Name="border">
+                                                <Grid>
+                                                    <Image x:Name="buttonImg"
+                                                           Source="/AOERandomizer.Multimedia;component/Resources/Images/close_button.png"
+                                                           Stretch="UniformToFill"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/close_button_hovered.png" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="true">
+                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/close_button_pressed.png" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+
+                <ScrollViewer Grid.Row="1"
+                              Grid.ColumnSpan="3"
+                              VerticalScrollBarVisibility="Visible"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl Margin="160"
+                                  ItemsSource="{Binding DataCategories}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"
+                                           HorizontalAlignment="Center" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Height="155"
+                                        Width="225"
+                                        Margin="10"
+                                        MouseEnter="Button_MouseEnter"
+                                        Click="Button_Click">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="Black"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                                    <Setter Property="RenderTransform">
+                                                        <Setter.Value>
+                                                            <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="2" />
+                                        </Style>
+                                    </Button.Resources>
+                                    <Button.Background>
+                                        <LinearGradientBrush Opacity="100" EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#D8FF0000"/>
+                                            <GradientStop Color="#E5954E07" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Button.Background>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Image Grid.Row="0"
+                                               Margin="3"
+                                               Source="{Binding ImageUri}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Top"/>
+                                        <TextBlock Grid.Row="1"
+                                                   Text="{Binding CategoryName}"
+                                                   FontSize="17"
+                                                   Margin="3"
+                                                   FontWeight="Bold"
+                                                   TextWrapping="Wrap"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Bottom"
+                                                   TextAlignment="Center"/>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <TextBlock Grid.Row="2"
+                           Grid.ColumnSpan="2"
+                           Margin="60, 15, 15, 10"
+                           Foreground="White"
+                           FontSize="16"
+                           Text="Status: No Bnads" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
