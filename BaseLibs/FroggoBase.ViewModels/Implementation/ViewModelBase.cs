@@ -1,4 +1,5 @@
 ﻿using FroggoBase.ViewModels.Interface;
+using System.ComponentModel;
 
 namespace FroggoBase.ViewModels.Implementation
 {
@@ -9,7 +10,7 @@ namespace FroggoBase.ViewModels.Implementation
     /// TODO2: (possibly optional) Make another 'generics' ViewModelBase<T> where T : IModel
     ///        Allows us to more easily apply a model to a viewmodel.
     /// </summary>
-    public class ViewModelBase : IViewModel
+    public class ViewModelBase : IViewModel, INotifyPropertyChanged
     {
         #region Constructors
 
@@ -21,5 +22,12 @@ namespace FroggoBase.ViewModels.Implementation
         }
 
         #endregion // Constructors
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propName)
+        {
+           PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
     }
 }

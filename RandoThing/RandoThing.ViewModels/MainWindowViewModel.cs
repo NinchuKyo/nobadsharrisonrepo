@@ -1,5 +1,7 @@
 ﻿using FroggoBase.ViewModels.Implementation;
 using FroggoBase.ViewModels.Interface;
+using RandoThing.ViewModels.Commands;
+using System.Windows.Input;
 
 namespace RandoThing.ViewModels
 {
@@ -20,11 +22,21 @@ namespace RandoThing.ViewModels
         public MainWindowViewModel()
             : base()
         {
-            CurrentViewModel = new TeamsViewViewModel();
+            UpdateViewCommand = new UpdateViewCommand(this);
         }
 
         #endregion // Constructors
         
-        public IViewModel CurrentViewModel { get => _currentViewModel; set => _currentViewModel = value; }
+        public IViewModel CurrentViewModel
+        {
+            get => _currentViewModel;
+            set
+            {
+                _currentViewModel = value;
+                OnPropertyChanged(nameof(CurrentViewModel));
+            }
+        }
+
+        public ICommand UpdateViewCommand { get; set; }
     }
 }

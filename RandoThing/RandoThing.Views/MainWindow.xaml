@@ -34,7 +34,7 @@
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <Button Height="80" Width="160" Margin="40" Content="Teams"/>
+            <Button Height="80" Width="160" Margin="40" Content="Teams" Command="{Binding UpdateViewCommand}" CommandParameter="Teams"/>
             <Button Height="80" Width="160" Margin="40" Content="Civs"/>
             <Button Height="80" Width="160" Margin="40" Content="Maps"/>
         </StackPanel>
