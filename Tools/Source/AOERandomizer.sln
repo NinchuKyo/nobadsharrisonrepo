@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOERandomizer.ViewModel", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOERandomizer.Configuration", "libs\AOERandomizer.Configuration\AOERandomizer.Configuration.csproj", "{0CBBBBDA-95E5-43CB-B39A-05155980D402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOERandomizer.Multimedia", "libs\AOERandomizer.Multimedia\AOERandomizer.Multimedia.csproj", "{4840D180-D066-434C-8D6E-598FBB225107}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOERandomizer.Multimedia", "libs\AOERandomizer.Multimedia\AOERandomizer.Multimedia.csproj", "{4840D180-D066-434C-8D6E-598FBB225107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOERandomizer.Utility", "libs\AOERandomizer.Utility\AOERandomizer.Utility.csproj", "{BC7266F1-3574-4AD7-B225-930DF665349C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOERandomizer.Utility", "libs\AOERandomizer.Utility\AOERandomizer.Utility.csproj", "{BC7266F1-3574-4AD7-B225-930DF665349C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOERandomizer.Navigation", "libs\AOERandomizer.Navigation\AOERandomizer.Navigation.csproj", "{F82DB7A0-09EA-4236-9A1E-7B54A83CA81D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{BC7266F1-3574-4AD7-B225-930DF665349C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC7266F1-3574-4AD7-B225-930DF665349C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC7266F1-3574-4AD7-B225-930DF665349C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F82DB7A0-09EA-4236-9A1E-7B54A83CA81D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F82DB7A0-09EA-4236-9A1E-7B54A83CA81D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F82DB7A0-09EA-4236-9A1E-7B54A83CA81D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F82DB7A0-09EA-4236-9A1E-7B54A83CA81D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

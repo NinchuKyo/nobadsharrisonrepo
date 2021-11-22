@@ -1,5 +1,5 @@
 ﻿using AOERandomizer.Configuration;
-using AOERandomizer.View;
+using AOERandomizer.View.Windows;
 using AOERandomizer.ViewModel;
 using Newtonsoft.Json;
 using System.ComponentModel;

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-namespace AOERandomizer.View
+namespace AOERandomizer.View.Windows
 {
     /// <summary>
     /// Interaction logic for SplashScreenWindow.xaml

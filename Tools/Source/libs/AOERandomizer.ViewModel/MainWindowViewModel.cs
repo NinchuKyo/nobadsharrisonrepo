@@ -2,10 +2,10 @@
 using AOERandomizer.ViewModel.Base;
 using AOERandomizer.ViewModel.Commands;
 using AOERandomizer.ViewModel.Enums;
-using System.Windows.Input;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Windows.Input;
 
 namespace AOERandomizer.ViewModel
 {
@@ -81,7 +81,7 @@ namespace AOERandomizer.ViewModel
             }
 
             // Simulate some work being done
-            int max = 3000;
+            int max = 1000;
             for (int i = 0; i <= max; i++)
             {
                 this._splashScreenVm.LoadingLabel = $"Loaded {i} / {max} Dogecoin";
