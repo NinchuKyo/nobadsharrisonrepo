@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <BaseOutputPath>..\..\..\bin</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Media\Sound\Music\background_music.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\SFX\button_click.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\SFX\button_mouse_over.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Video\background_video.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\base\FroggoBase\FroggoBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Cursors\arrow.cur" />
+    <Resource Include="Resources\Cursors\sparky.cur" />
+    <Resource Include="Resources\Images\background.jpg" />
+    <Resource Include="Resources\Images\froggo_icon.ico" />
+    <Resource Include="Resources\Images\app_splash.png" />
+    <Resource Include="Resources\Images\close_button.png" />
+    <Resource Include="Resources\Images\close_button_hovered.png" />
+    <Resource Include="Resources\Images\close_button_pressed.png" />
+    <Resource Include="Resources\Images\froggo_title.png" />
+    <Resource Include="Resources\Images\minimize_button.png" />
+    <Resource Include="Resources\Images\minimize_button_hovered.png" />
+    <Resource Include="Resources\Images\minimize_button_pressed.png" />
+	<Resource Include="Resources\Images\MainWindow\Civs.png" />
+	<Resource Include="Resources\Images\MainWindow\CoinFlip.png" />
+	<Resource Include="Resources\Images\MainWindow\Maps.png" />
+	<Resource Include="Resources\Images\MainWindow\Teams.png" />
+    <Resource Include="Resources\Images\ScrollBar\Down_Arrow_Default.png" />
+    <Resource Include="Resources\Images\ScrollBar\Down_Arrow_MouseOver.png" />
+    <Resource Include="Resources\Images\ScrollBar\Thumb_Icon_Default.png" />
+    <Resource Include="Resources\Images\ScrollBar\Thumb_Icon_MouseOver.png" />
+    <Resource Include="Resources\Images\ScrollBar\Up_Arrow_Default.png" />
+    <Resource Include="Resources\Images\ScrollBar\Up_Arrow_MouseOver.png" />
+  </ItemGroup>
+
+</Project>
