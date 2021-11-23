@@ -6,6 +6,8 @@ namespace AOERandomizer.View.Converters
 {
     internal class ScrollLimitConverter : IMultiValueConverter
     {
+        private const string LOG_CTX = "AOERandomizer.View.Converters";
+
         /// <inheritdoc />
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

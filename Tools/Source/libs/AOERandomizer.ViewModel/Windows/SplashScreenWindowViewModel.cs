@@ -1,8 +1,8 @@
 ﻿using AOERandomizer.ViewModel.Base;
 
-namespace AOERandomizer.ViewModel
+namespace AOERandomizer.ViewModel.Windows
 {
-    public class SplashScreenViewModel : ViewModelBase
+    public class SplashScreenWindowViewModel : ViewModelBase
     {
         #region Members
 
@@ -16,7 +16,7 @@ namespace AOERandomizer.ViewModel
         /// Constructs a new instance of a splash screen view model.
         /// </summary>
         /// <param name="initialText">(optional) The initial text to display in the splash screen label.</param>
-        public SplashScreenViewModel(string initialText = "")
+        public SplashScreenWindowViewModel(string initialText = "")
         {
             this._loadingLabel = initialText;
         }

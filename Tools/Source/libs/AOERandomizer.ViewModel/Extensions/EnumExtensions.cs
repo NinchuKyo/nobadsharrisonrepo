@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
-namespace AOERandomizer.Utility
+namespace AOERandomizer.ViewModel.Extensions
 {
     /// <summary>
     /// Extension class for certain enum operations.

@@ -1,12 +1,14 @@
 ﻿using AOERandomizer.ViewModel.Base;
+using AOERandomizer.ViewModel.Enums;
+using AOERandomizer.ViewModel.Extensions;
 
 namespace AOERandomizer.ViewModel
 {
-    public class DataCategoryViewModel : ViewModelBase
+    public class PageButtonViewModel : ViewModelBase
     {
         #region Members
 
-        private string _categoryName;
+        private EPageName _pageName;
         private string _imageUri;
 
         #endregion // Members
@@ -18,9 +20,9 @@ namespace AOERandomizer.ViewModel
         /// </summary>
         /// <param name="categoryName">The category name.</param>
         /// <param name="imageUri">The path to the category's icon.</param>
-        public DataCategoryViewModel(string categoryName, string imageUri)
+        public PageButtonViewModel(EPageName pageName, string imageUri)
         {
-            this._categoryName = categoryName;
+            this._pageName = pageName;
             this._imageUri = imageUri;
         }
 
@@ -29,16 +31,21 @@ namespace AOERandomizer.ViewModel
         #region Properties
 
         /// <summary>
-        /// Gets or sets the category name.
+        /// Gets or sets the page name.
         /// </summary>
-        public string CategoryName
+        public EPageName PageName
         {
-            get => this._categoryName;
-            set => this.SetProperty(ref this._categoryName, value);
+            get => this._pageName;
+            set => this.SetProperty(ref this._pageName, value);
+        }
+
+        public string DisplayName
+        {
+            get => this._pageName.GetDisplayName();
         }
 
         /// <summary>
-        /// Gets or sets the path to the category's icon.
+        /// Gets or sets the path to the page's icon.
         /// </summary>
         public string ImageUri
         {

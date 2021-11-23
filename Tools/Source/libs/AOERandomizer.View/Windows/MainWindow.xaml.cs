@@ -1,8 +1,10 @@
-﻿using AOERandomizer.ViewModel;
+﻿using AOERandomizer.Multimedia;
+using AOERandomizer.ViewModel.Windows;
+using FroggoBase;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace AOERandomizer.View.Windows
 {
@@ -11,16 +13,13 @@ namespace AOERandomizer.View.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Members
+        #region Constants
 
-        private readonly MediaPlayer _buttonMouseOverSound;
-        private readonly MediaPlayer _buttonClickSound;
-        private readonly MediaPlayer _backgroundMusic;
+        private const string LOG_CTX = "AOERandomizer.View.Windows.MainWindow";
 
-        private readonly Uri _buttonMouseOverUri;
-        private readonly Uri _buttonClickUri;
+        private const string BackgroundVideoPath = @"Resources\Media\Video\background_video.mp4";
 
-        #endregion // Members
+        #endregion // Constants
 
         #region Constructors
 
@@ -29,32 +28,10 @@ namespace AOERandomizer.View.Windows
         /// </summary>
         public MainWindow()
         {
-            this._buttonMouseOverSound = new MediaPlayer
-            {
-                Volume = 0.1
-            };
-
-            this._buttonMouseOverUri = new Uri(Environment.CurrentDirectory + @"\Resources\Media\Sound\SFX\button_mouse_over.wav", UriKind.Relative);
-
-            this._buttonClickSound = new MediaPlayer
-            {
-                Volume = 0.1
-            };
-
-            this._buttonClickUri = new Uri(Environment.CurrentDirectory + @"\Resources\Media\Sound\SFX\button_click.wav", UriKind.Relative);
-
-            this._backgroundMusic = new MediaPlayer
-            {
-                Volume = 0.25
-            };
-
-            this._backgroundMusic.MediaEnded += new EventHandler(BackgroundMusic_MediaEnded);
-
-            this._backgroundMusic.Open(new Uri(Environment.CurrentDirectory + @"\Resources\Media\Sound\Music\background_music.wav", UriKind.Relative));
-
             this.InitializeComponent();
 
-            this.backgroundVideo.Source = new Uri(Environment.CurrentDirectory + @"\Resources\Media\Video\background_video.mp4", UriKind.Relative);
+            // Hacky solution - reference the video player in the XAML - must be done after initializing UI components
+            this.backgroundVideo.Source = new Uri(Path.Combine(Environment.CurrentDirectory, BackgroundVideoPath), UriKind.Relative);
         }
 
         #endregion // Constructors
@@ -81,6 +58,7 @@ namespace AOERandomizer.View.Windows
         /// <param name="e">The event arguments.</param>
         private void Minimize_Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Button_Click(sender, e);
             SystemCommands.MinimizeWindow(this);
         }
 
@@ -91,70 +69,69 @@ namespace AOERandomizer.View.Windows
         /// <param name="e">The event arguments.</param>
         private void Close_Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Button_Click(sender, e);
             SystemCommands.CloseWindow(this);
         }
 
-        private void MuteButton_Click(object sender, RoutedEventArgs e)
-        {
-            this._backgroundMusic.IsMuted = true;
-            ((MainWindowViewModel)this.DataContext).IsBackgroundMusicMuted = true;
-            ((MainWindowViewModel)this.DataContext).IsBackgroundMusicUnmuted = false;
-        }
-
-        private void UnmuteButton_Click(object sender, RoutedEventArgs e)
-        {
-            this._backgroundMusic.IsMuted = false;
-            ((MainWindowViewModel)this.DataContext).IsBackgroundMusicMuted = false;
-            ((MainWindowViewModel)this.DataContext).IsBackgroundMusicUnmuted = true;
-        }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            SettingsWindow settingsWindow = new();
-            settingsWindow.DataContext = ((MainWindowViewModel)this.DataContext).Settings;
-            bool? result = settingsWindow.ShowDialog();
-
-            if (result.HasValue && result.Value)
-            {
-                this._backgroundMusic.IsMuted = !((MainWindowViewModel)this.DataContext).Settings.MusicEnabled;
-            }
-        }
-
+        /// <summary>
+        /// Triggers when the user enters a button with their mouse pointer.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (((MainWindowViewModel)this.DataContext).Settings.SfxEnabled)
+            if (((MainWindowViewModel)this.DataContext).AppSettings.EnableSfx)
             {
-                this._buttonMouseOverSound.Open(this._buttonMouseOverUri);
-                this._buttonMouseOverSound.Play();
+                AudioHelper.PlayButtonHoverSound();
             }
         }
 
-        private void BackgroundMusic_MediaEnded(object? sender, EventArgs e)
-        {
-            this._backgroundMusic.Position = TimeSpan.Zero;
-            this._backgroundMusic.Play();
-        }
-
+        /// <summary>
+        /// Triggers when the users clicks a button with their mouse.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (((MainWindowViewModel)this.DataContext).Settings.SfxEnabled)
+            if (((MainWindowViewModel)this.DataContext).AppSettings.EnableSfx)
             {
-                this._buttonClickSound.Open(this._buttonClickUri);
-                this._buttonClickSound.Play();
+                AudioHelper.PlayButtonClickSound();
             }
         }
 
+        /// <summary>
+        /// Triggers when the main window is finished loading.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            this._backgroundMusic.IsMuted = !((MainWindowViewModel)this.DataContext).Settings.MusicEnabled;
-            this._backgroundMusic.Play();
+            AudioHelper.SetIsBackgroundMusicMuted(!((MainWindowViewModel)DataContext).AppSettings.EnableMusic);
+            AudioHelper.PlayBackgroundMusic();
         }
 
+        /// <summary>
+        /// Triggers when the background video has finished loading and is ready to play.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void BackgroundVideo_Loaded(object sender, RoutedEventArgs e)
         {
-            this.backgroundVideo.Play();
+            try
+            {
+                this.backgroundVideo.Play();
+            }
+            catch (Exception ex)
+            {
+                FroggoApplication.ApplicationLog.ExceptionCtx(LOG_CTX, "Could not play background video", ex);
+            }
         }
 
+        /// <summary>
+        /// Triggeres when the video playing in the background finishes playing.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void BackgroundVideo_MediaEnded(object sender, RoutedEventArgs e)
         {
             this.backgroundVideo.Position = TimeSpan.FromSeconds(0);

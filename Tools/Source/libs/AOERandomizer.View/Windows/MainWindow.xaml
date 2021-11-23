@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:AOERandomizer.View.Converters"
+        xmlns:pageVms="clr-namespace:AOERandomizer.ViewModel.Pages;assembly=AOERandomizer.ViewModel"
+        xmlns:pageViews="clr-namespace:AOERandomizer.View.Pages"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -151,41 +153,9 @@
                             Margin="5">
                     <Button Margin="4"
                             BorderThickness="0"
-                            Width="50"
-                            Height="50"
-                            Click="SettingsButton_Click">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-
-                                            <Border x:Name="border">
-                                                <Grid>
-                                                    <Image x:Name="buttonImg"
-                                                           Source="/AOERandomizer.Multimedia;component/Resources/Images/settings_button.png"
-                                                           Stretch="UniformToFill"/>
-                                                </Grid>
-                                            </Border>
-
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/settings_button_hovered.png" />
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/settings_button_pressed.png" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button Margin="4"
-                            BorderThickness="0"
                             Width="45"
                             Height="45"
+                            MouseEnter="Button_MouseEnter"
                             Click="Minimize_Button_Click">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
@@ -219,6 +189,7 @@
                             BorderThickness="0"
                             Width="50"
                             Height="50"
+                            MouseEnter="Button_MouseEnter"
                             Click="Close_Button_Click">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
@@ -250,81 +221,34 @@
                     </Button>
                 </StackPanel>
 
+
                 <ScrollViewer Grid.Row="1"
                               Grid.ColumnSpan="3"
                               VerticalScrollBarVisibility="Visible"
                               HorizontalScrollBarVisibility="Disabled">
-                    <ItemsControl Margin="160"
-                                  ItemsSource="{Binding DataCategories}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal"
-                                           HorizontalAlignment="Center" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Button Height="155"
-                                        Width="225"
-                                        Margin="10"
-                                        MouseEnter="Button_MouseEnter"
-                                        Click="Button_Click">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Setter Property="Background" Value="Black"/>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
-                                                    <Setter Property="RenderTransform">
-                                                        <Setter.Value>
-                                                            <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="10"/>
-                                            <Setter Property="BorderBrush" Value="Black"/>
-                                            <Setter Property="BorderThickness" Value="2" />
-                                        </Style>
-                                    </Button.Resources>
-                                    <Button.Background>
-                                        <LinearGradientBrush Opacity="100" EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#D8FF0000"/>
-                                            <GradientStop Color="#E5954E07" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Button.Background>
-
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-
-                                        <Image Grid.Row="0"
-                                               Margin="3"
-                                               Source="{Binding ImageUri}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Top"/>
-                                        <TextBlock Grid.Row="1"
-                                                   Text="{Binding CategoryName}"
-                                                   FontSize="17"
-                                                   Margin="3"
-                                                   FontWeight="Bold"
-                                                   TextWrapping="Wrap"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Bottom"
-                                                   TextAlignment="Center"/>
-                                    </Grid>
-                                </Button>
+                    <ContentControl Content="{Binding SelectedVm}">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="{x:Type pageVms:HomePageViewModel}">
+                                <pageViews:HomePage/>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+
+                            <DataTemplate DataType="{x:Type pageVms:TeamsPageViewModel}">
+                                <pageViews:TeamsPage/>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type pageVms:CivsPageViewModel}">
+                                <pageViews:CivsPage/>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type pageVms:MapsPageViewModel}">
+                                <pageViews:MapsPage/>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type pageVms:CoinFlipPageViewModel}">
+                                <pageViews:CoinFlipPage/>
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
                 </ScrollViewer>
 
                 <TextBlock Grid.Row="2"
