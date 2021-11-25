@@ -1,7 +1,9 @@
 ﻿using AOERandomizer.Configuration;
+using AOERandomizer.Logging;
 using AOERandomizer.ViewModel.Base;
 using AOERandomizer.ViewModel.Commands;
 using AOERandomizer.ViewModel.Navigation;
+using FroggoBase;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -18,6 +20,8 @@ namespace AOERandomizer.ViewModel.Pages
         #region Members
 
         protected readonly NavigationViewModel _navVm;
+
+        protected readonly ILog? _log;
         protected readonly ObservableCollection<PageButtonViewModel> _pageButtons;
 
         #endregion // Members
@@ -42,6 +46,7 @@ namespace AOERandomizer.ViewModel.Pages
         {
             this.SettingsConfig = settingsConfig;
             this._navVm = navVm;
+            this._log = FroggoApplication.ApplicationLog;
 
             this.NavigateCommand = new RelayCommand(CanExecuteNavigateCommand, ExecuteNavigateCommand);
             this._pageButtons = new ObservableCollection<PageButtonViewModel>();

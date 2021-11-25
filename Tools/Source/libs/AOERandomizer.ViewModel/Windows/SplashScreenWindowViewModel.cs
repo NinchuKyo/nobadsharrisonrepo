@@ -1,4 +1,6 @@
-﻿using AOERandomizer.ViewModel.Base;
+﻿using AOERandomizer.Logging;
+using AOERandomizer.ViewModel.Base;
+using FroggoBase;
 
 namespace AOERandomizer.ViewModel.Windows
 {
@@ -7,9 +9,16 @@ namespace AOERandomizer.ViewModel.Windows
     /// </summary>
     public class SplashScreenWindowViewModel : ViewModelBase
     {
+        #region Constants
+
+        private const string LOG_CTX = "AOERandomizer.ViewModel.Windows.SplashScreenWindowViewModel";
+
+        #endregion // Constants
+
         #region Members
 
         private string _loadingLabel;
+        private readonly ILog? _log;
 
         #endregion // Members
 
@@ -21,7 +30,10 @@ namespace AOERandomizer.ViewModel.Windows
         /// <param name="initialText">(optional) The initial text to display in the splash screen label.</param>
         public SplashScreenWindowViewModel(string initialText = "")
         {
+            this._log = FroggoApplication.ApplicationLog;
             this._loadingLabel = initialText;
+
+            this._log.InfoCtx(LOG_CTX, "SplashScreenWindowViewModel created.");
         }
 
         #endregion // Constructors

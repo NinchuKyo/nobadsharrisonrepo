@@ -9,6 +9,12 @@ namespace AOERandomizer.ViewModel.Pages
     /// </summary>
     public class CivsPageViewModel : PageBaseViewModel
     {
+        #region Constants
+
+        private const string LOG_CTX = "AOERandomizer.ViewModel.Pages.CivsPageViewModel";
+
+        #endregion // Constants
+
         #region Constructors
 
         /// <summary>
@@ -19,6 +25,7 @@ namespace AOERandomizer.ViewModel.Pages
         public CivsPageViewModel(AppConfig settingsConfig, NavigationViewModel navVm)
             : base(settingsConfig, navVm)
         {
+            this._log.InfoCtx(LOG_CTX, "CivsPageViewModel created");
         }
 
         #endregion // Constructors
@@ -28,17 +35,20 @@ namespace AOERandomizer.ViewModel.Pages
         /// <inheritdoc />
         public override void Load()
         {
-            // Add teams button
-            string iconPath = $"{ButtonIconsPath}/{EPageName.Teams}.png";
-            this._pageButtons.Add(new PageButtonViewModel(EPageName.Teams, iconPath));
+            using (this._log.ProfileCtx(LOG_CTX, "Loading CivsPageViewModel"))
+            {
+                // Add teams button
+                string iconPath = $"{ButtonIconsPath}/{EPageName.Teams}.png";
+                this._pageButtons.Add(new PageButtonViewModel(EPageName.Teams, iconPath));
 
-            // Add home button
-            iconPath = $"{ButtonIconsPath}/{EPageName.Home}.png";
-            this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
+                // Add home button
+                iconPath = $"{ButtonIconsPath}/{EPageName.Home}.png";
+                this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
 
-            // Add maps button
-            iconPath = $"{ButtonIconsPath}/{EPageName.Maps}.png";
-            this._pageButtons.Add(new PageButtonViewModel(EPageName.Maps, iconPath));
+                // Add maps button
+                iconPath = $"{ButtonIconsPath}/{EPageName.Maps}.png";
+                this._pageButtons.Add(new PageButtonViewModel(EPageName.Maps, iconPath));
+            }
         }
 
         /// <inheritdoc />
@@ -46,6 +56,8 @@ namespace AOERandomizer.ViewModel.Pages
         {
             if (param is PageButtonViewModel button)
             {
+                this._log.InfoCtx(LOG_CTX, $"Navigating to {button.PageName} page");
+
                 switch (button.PageName)
                 {
                     case EPageName.Teams:
@@ -64,6 +76,7 @@ namespace AOERandomizer.ViewModel.Pages
                         this._navVm.SelectedVm = mapsPageVm;
                         break;
                     default:
+                        this._log.WarningCtx(LOG_CTX, $"Page {button.PageName} not supported for navigation");
                         break;
                 }
             }

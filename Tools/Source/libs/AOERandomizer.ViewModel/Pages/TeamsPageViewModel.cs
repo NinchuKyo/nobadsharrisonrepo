@@ -9,6 +9,12 @@ namespace AOERandomizer.ViewModel.Pages
     /// </summary>
     public class TeamsPageViewModel : PageBaseViewModel
     {
+        #region Constants
+
+        private const string LOG_CTX = "AOERandomizer.ViewModel.Pages.TeamsPageViewModel";
+
+        #endregion // Constants
+
         #region Constructors
 
         /// <summary>
@@ -19,6 +25,7 @@ namespace AOERandomizer.ViewModel.Pages
         public TeamsPageViewModel(AppConfig settingsConfig, NavigationViewModel navVm)
             : base(settingsConfig, navVm)
         {
+            this._log.InfoCtx(LOG_CTX, "TeamsPageViewModel created");
         }
 
         #endregion // Constructors
@@ -28,13 +35,16 @@ namespace AOERandomizer.ViewModel.Pages
         /// <inheritdoc />
         public override void Load()
         {
-            // Add home button
-            string iconPath = $"{ButtonIconsPath}/{EPageName.Home}.png";
-            this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
+            using (this._log.ProfileCtx(LOG_CTX, "Loading TeamsPageViewModel"))
+            {
+                // Add home button
+                string iconPath = $"{ButtonIconsPath}/{EPageName.Home}.png";
+                this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
 
-            // Add civs button
-            iconPath = $"{ButtonIconsPath}/{EPageName.Civs}.png";
-            this._pageButtons.Add(new PageButtonViewModel(EPageName.Civs, iconPath));
+                // Add civs button
+                iconPath = $"{ButtonIconsPath}/{EPageName.Civs}.png";
+                this._pageButtons.Add(new PageButtonViewModel(EPageName.Civs, iconPath));
+            }
         }
 
         /// <inheritdoc />
@@ -42,6 +52,8 @@ namespace AOERandomizer.ViewModel.Pages
         {
             if (param is PageButtonViewModel button)
             {
+                this._log.InfoCtx(LOG_CTX, $"Navigating to {button.PageName} page");
+
                 switch (button.PageName)
                 {
                     case EPageName.Home:
@@ -55,6 +67,7 @@ namespace AOERandomizer.ViewModel.Pages
                         this._navVm.SelectedVm = civsPageVm;
                         break;
                     default:
+                        this._log.WarningCtx(LOG_CTX, $"Page {button.PageName} not supported for navigation");
                         break;
                 }
             }

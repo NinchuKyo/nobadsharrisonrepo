@@ -68,11 +68,7 @@ namespace AOERandomizer
                 }
 
                 MainWindowViewModel mainWindowVm = new(splashScreenVm, this._appSettingsConfig, this._appDataConfig);
-
-                using (ApplicationLog.ProfileCtx(LOG_CTX, "Initializing viewmodels"))
-                {
-                    mainWindowVm.Load();
-                }
+                mainWindowVm.Load();
 
                 // Since we're not on the UI thread once we're done we need to use the Dispatcher to create and show the main window
                 this.Dispatcher.Invoke(() =>

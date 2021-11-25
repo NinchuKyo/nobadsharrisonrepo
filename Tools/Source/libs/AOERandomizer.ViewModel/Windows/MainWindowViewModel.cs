@@ -1,7 +1,9 @@
 ﻿using AOERandomizer.Configuration;
+using AOERandomizer.Logging;
 using AOERandomizer.ViewModel.Base;
 using AOERandomizer.ViewModel.Navigation;
 using AOERandomizer.ViewModel.Pages;
+using FroggoBase;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -13,14 +15,21 @@ namespace AOERandomizer.ViewModel.Windows
     /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
+        #region Constants
+
+        private const string LOG_CTX = "AOERandomizer.ViewModel.Windows.MainWindowViewModel";
+
+        #endregion // Constants
+
         #region Members
 
         private readonly SplashScreenWindowViewModel _splashScreenVm;
         private readonly AppConfig _settingsConfig;
         private readonly DataConfig _dataConfig;
 
-        private readonly NavigationViewModel _navManager;
+        private readonly ILog? _log;
 
+        private readonly NavigationViewModel _navManager;
         private readonly HomePageViewModel _homePageVm;
 
         #endregion // Members
@@ -39,12 +48,15 @@ namespace AOERandomizer.ViewModel.Windows
             this._settingsConfig = settingsConfig;
             this._dataConfig = dataConfig;
 
-            this._navManager = new NavigationViewModel();
+            this._log = FroggoApplication.ApplicationLog;
 
+            this._navManager = new NavigationViewModel();
             this._homePageVm = new HomePageViewModel(settingsConfig, this._navManager);
 
             this._navManager.PropertyChanged += this.NavManager_PropertyChanged;
             this._navManager.SelectedVm = this._homePageVm;
+
+            this._log.InfoCtx(LOG_CTX, "MainWindowViewmodel created.");
         }
 
         #endregion // Constructors
@@ -75,19 +87,22 @@ namespace AOERandomizer.ViewModel.Windows
         /// </summary>
         public void Load()
         {
-            // Load the home page viewmodel...
-            this._homePageVm.Load();
-
-            // Simulate some work being done (for the lols)
-            int max = 500;
-            for (int i = 0; i <= max; i++)
+            using (this._log.ProfileCtx(LOG_CTX, "Loading MainWindowViewModel"))
             {
-                this._splashScreenVm.LoadingLabel = $"Loaded {i} / {max} Dogecoin";
-                Thread.Sleep(1);
-            }
+                // Load the home page viewmodel...
+                this._homePageVm.Load();
 
-            this._splashScreenVm.LoadingLabel = "no bnads";
-            Thread.Sleep(1500);
+                // Simulate some work being done (for the lols)
+                int max = 500;
+                for (int i = 0; i <= max; i++)
+                {
+                    this._splashScreenVm.LoadingLabel = $"Loaded {i} / {max} Dogecoin";
+                    Thread.Sleep(1);
+                }
+
+                this._splashScreenVm.LoadingLabel = "no bnads";
+                Thread.Sleep(1500);
+            }
         }
 
         /// <summary>
