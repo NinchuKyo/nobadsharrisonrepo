@@ -71,7 +71,7 @@ namespace AOERandomizer.ViewModel.Windows
         #region Methods
 
         /// <summary>
-        /// Loads any necessary data or dependencies for the application.
+        /// Loads any necessary data or dependencies for the main window.
         /// </summary>
         public void Load()
         {
@@ -90,6 +90,12 @@ namespace AOERandomizer.ViewModel.Windows
             Thread.Sleep(1500);
         }
 
+        /// <summary>
+        /// Triggers when the nav manager selects a new viewmodel to show.  
+        /// This will tell our main window when to change the page.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void NavManager_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(e.PropertyName) && e.PropertyName.Equals("SelectedVm"))

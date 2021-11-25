@@ -3,7 +3,7 @@
 namespace AOERandomizer.View.Pages
 {
     /// <summary>
-    /// Interaction logic for MapsPage.xaml
+    /// Interaction logic for MapsPage.xaml.
     /// </summary>
     internal partial class MapsPage : FroggoPageBase
     {

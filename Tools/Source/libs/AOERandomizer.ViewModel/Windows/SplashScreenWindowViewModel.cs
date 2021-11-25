@@ -2,6 +2,9 @@
 
 namespace AOERandomizer.ViewModel.Windows
 {
+    /// <summary>
+    /// Viewmodel for the splash screen window.
+    /// </summary>
     public class SplashScreenWindowViewModel : ViewModelBase
     {
         #region Members

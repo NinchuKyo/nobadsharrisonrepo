@@ -13,7 +13,7 @@ namespace FroggoBase
     {
         #region Constants
 
-        private static readonly string LogPath = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), "Logs");
+        private static readonly string LogPath = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "Logs");
 
         #endregion // Constants
 

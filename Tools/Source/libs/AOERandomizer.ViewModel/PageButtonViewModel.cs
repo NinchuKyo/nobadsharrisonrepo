@@ -4,6 +4,9 @@ using AOERandomizer.ViewModel.Extensions;
 
 namespace AOERandomizer.ViewModel
 {
+    /// <summary>
+    /// Base viewmodel for a page navigation button.
+    /// </summary>
     public class PageButtonViewModel : ViewModelBase
     {
         #region Members
@@ -39,6 +42,9 @@ namespace AOERandomizer.ViewModel
             set => this.SetProperty(ref this._pageName, value);
         }
 
+        /// <summary>
+        /// Gets the button's display name.
+        /// </summary>
         public string DisplayName
         {
             get => this._pageName.GetDisplayName();

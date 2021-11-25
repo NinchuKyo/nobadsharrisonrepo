@@ -15,9 +15,12 @@ namespace AOERandomizer.Multimedia
 
         private const string LOG_CTX = "AOERandomizer.Multimedia.AudioHelper";
 
-        private const string MouseOverSoundPath = @"Resources\Media\Sound\SFX\button_mouse_over.wav";
-        private const string ButtonClickSoundPath = @"Resources\Media\Sound\SFX\button_click.wav";
-        private const string BackgroundMusicPath = @"Resources\Media\Sound\Music\background_music.wav";
+        private const string SfxFolder = @"Resources\Media\Sound\SFX\";
+        private const string MusicFolder = @"Resources\Media\Sound\Music\";
+
+        private const string MouseOverSoundPath = $"{SfxFolder}button_mouse_over.wav";
+        private const string ButtonClickSoundPath = $"{SfxFolder}button_click.wav";
+        private const string BackgroundMusicPath = $"{MusicFolder}background_music.wav";
 
         #endregion // Constants
 

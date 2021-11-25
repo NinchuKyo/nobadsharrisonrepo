@@ -9,11 +9,23 @@ namespace AOERandomizer.ViewModel.Pages
     /// </summary>
     public class CivsPageViewModel : PageBaseViewModel
     {
-        public CivsPageViewModel(AppConfig settingsConfig, NavigationViewModel navVm) 
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="settingsConfig">Application settings config.</param>
+        /// <param name="navVm">Viewmodel in charge of navigation.</param>
+        public CivsPageViewModel(AppConfig settingsConfig, NavigationViewModel navVm)
             : base(settingsConfig, navVm)
         {
         }
 
+        #endregion // Constructors
+
+        #region Methods
+
+        /// <inheritdoc />
         public override void Load()
         {
             // Add teams button
@@ -29,6 +41,7 @@ namespace AOERandomizer.ViewModel.Pages
             this._pageButtons.Add(new PageButtonViewModel(EPageName.Maps, iconPath));
         }
 
+        /// <inheritdoc />
         protected override void ExecuteNavigateCommand(object? param)
         {
             if (param is PageButtonViewModel button)
@@ -55,5 +68,7 @@ namespace AOERandomizer.ViewModel.Pages
                 }
             }
         }
+
+        #endregion // Methods
     }
 }

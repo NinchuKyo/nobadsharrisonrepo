@@ -9,11 +9,23 @@ namespace AOERandomizer.ViewModel.Pages
     /// </summary>
     public class CoinFlipPageViewModel : PageBaseViewModel
     {
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="settingsConfig">Application settings config.</param>
+        /// <param name="navVm">Viewmodel in charge of navigation.</param>
         public CoinFlipPageViewModel(AppConfig settingsConfig, NavigationViewModel navVm)
             : base(settingsConfig, navVm)
         {
         }
 
+        #endregion // Constructors
+
+        #region Methods
+
+        /// <inheritdoc />
         public override void Load()
         {
             // Add home button
@@ -21,6 +33,7 @@ namespace AOERandomizer.ViewModel.Pages
             this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
         }
 
+        /// <inheritdoc />
         protected override void ExecuteNavigateCommand(object? param)
         {
             if (param is PageButtonViewModel button)
@@ -37,5 +50,7 @@ namespace AOERandomizer.ViewModel.Pages
                 }
             }
         }
+
+        #endregion // Methods
     }
 }

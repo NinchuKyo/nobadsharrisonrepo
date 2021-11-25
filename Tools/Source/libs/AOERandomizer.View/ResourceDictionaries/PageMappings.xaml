@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:pageVms="clr-namespace:AOERandomizer.ViewModel.Pages;assembly=AOERandomizer.ViewModel"
+                    xmlns:pageViews="clr-namespace:AOERandomizer.View.Pages">
+    <DataTemplate DataType="{x:Type pageVms:HomePageViewModel}">
+        <pageViews:HomePage/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type pageVms:TeamsPageViewModel}">
+        <pageViews:TeamsPage/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type pageVms:CivsPageViewModel}">
+        <pageViews:CivsPage/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type pageVms:MapsPageViewModel}">
+        <pageViews:MapsPage/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type pageVms:CoinFlipPageViewModel}">
+        <pageViews:CoinFlipPage/>
+    </DataTemplate>
+</ResourceDictionary>

@@ -1,10 +1,12 @@
-﻿namespace AOERandomizer.Configuration
+﻿using AOERandomizer.Model;
+
+namespace AOERandomizer.Configuration
 {
     /// <summary>
     /// Application data config definition.
     /// </summary>
-    public class DataConfig
+    public class DataConfig : ModelBase
     {
-        // TODO: Fill this class with models (make that proj?) to persist
+        // TODO: Fill this class with models to persist
     }
 }

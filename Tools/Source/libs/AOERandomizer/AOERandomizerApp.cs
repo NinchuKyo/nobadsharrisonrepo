@@ -15,6 +15,7 @@ namespace AOERandomizer
         #region Constants
 
         private const string LOG_CTX = "AOERandomizerApp.AOERandomizerApp";
+
         private const string LoadingMsg = "Loading...";
 
         #endregion // Constants
@@ -59,9 +60,6 @@ namespace AOERandomizer
                     {
                         this._appSettingsConfig = ConfigManager.LoadSettingsConfig();
                         this._appDataConfig = ConfigManager.LoadDataConfig();
-
-                        this._appSettingsConfig.EnableMusic = true;
-                        this._appSettingsConfig.EnableSfx = true;
                     }
                     catch (Exception ex)
                     {

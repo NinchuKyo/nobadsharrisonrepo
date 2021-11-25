@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace AOERandomizer.View.Controls
 {
+    /// <summary>
+    /// Base page class for navigation.
+    /// </summary>
     internal class FroggoPageBase : UserControl
     {
         /// <summary>

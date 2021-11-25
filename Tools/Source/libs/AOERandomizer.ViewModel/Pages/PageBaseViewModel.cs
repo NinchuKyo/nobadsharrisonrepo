@@ -11,7 +11,7 @@ namespace AOERandomizer.ViewModel.Pages
     {
         #region Constants
 
-        protected const string ButtonIconsPath = $"pack://application:,,,/AOERandomizer.Multimedia;component/Resources/Images/Buttons";
+        protected const string ButtonIconsPath = $"pack://application:,,,/AOERandomizer.Multimedia;component/Resources/Images/PageButtons";
 
         #endregion // Constants
 
@@ -24,6 +24,9 @@ namespace AOERandomizer.ViewModel.Pages
 
         #region Commands
 
+        /// <summary>
+        /// Gets or sets the navigate command.
+        /// </summary>
         public ICommand NavigateCommand { get; }
 
         #endregion // Commands
@@ -44,8 +47,17 @@ namespace AOERandomizer.ViewModel.Pages
             this._pageButtons = new ObservableCollection<PageButtonViewModel>();
         }
 
+        /// <summary>
+        /// Executes the navigate command.
+        /// </summary>
+        /// <param name="param">Command parameter.</param>
         protected abstract void ExecuteNavigateCommand(object? param);
 
+        /// <summary>
+        /// Returns a flag indicating whether the navigate command can be executed.
+        /// </summary>
+        /// <param name="param">Command parameter.</param>
+        /// <returns>Flag indicating whether the navigate command can execute.</returns>
         protected virtual bool CanExecuteNavigateCommand(object? param)
         {
             return true;
@@ -55,14 +67,23 @@ namespace AOERandomizer.ViewModel.Pages
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the application settings configuration.
+        /// </summary>
         public AppConfig SettingsConfig { get; private set; }
 
+        /// <summary>
+        /// Gets the page navigation buttons.
+        /// </summary>
         public ObservableCollection<PageButtonViewModel> PageButtons => this._pageButtons;
 
         #endregion // Properties
 
         #region Methods
 
+        /// <summary>
+        /// Loads the necessary resources required for the associated page to run.
+        /// </summary>
         public abstract void Load();
 
         #endregion // Methods

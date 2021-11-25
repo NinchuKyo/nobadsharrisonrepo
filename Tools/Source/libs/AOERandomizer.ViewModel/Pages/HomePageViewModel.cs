@@ -16,6 +16,7 @@ namespace AOERandomizer.ViewModel.Pages
         /// Default constructor.
         /// </summary>
         /// <param name="settingsConfig">Application settings config.</param>
+        /// <param name="navVm">Viewmodel in charge of navigation.</param>
         public HomePageViewModel(AppConfig settingsConfig, NavigationViewModel navVm)
             : base(settingsConfig, navVm)
         {
@@ -25,9 +26,7 @@ namespace AOERandomizer.ViewModel.Pages
 
         #region Methods
 
-        /// <summary>
-        /// Loads any necessary data associate with this viewmodel.
-        /// </summary>
+        /// <inheritdoc />
         public override void Load()
         {
             foreach (EPageName pageName in Enum.GetValues(typeof(EPageName)))
@@ -41,6 +40,7 @@ namespace AOERandomizer.ViewModel.Pages
             }
         }
 
+        /// <inheritdoc />
         protected override void ExecuteNavigateCommand(object? param)
         {
             if (param is PageButtonViewModel button)
