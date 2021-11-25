@@ -75,13 +75,11 @@ namespace AOERandomizer.ViewModel.Windows
         /// </summary>
         public void Load()
         {
-            // Load the viewmodels for our pages (if needed)...
+            // Load the home page viewmodel...
             this._homePageVm.Load();
 
-            // TODO: Put other loading code here (or call other viewmodel Load()'s that need to do stuff before the main window displays)
-
             // Simulate some work being done (for the lols)
-            int max = 1000;
+            int max = 500;
             for (int i = 0; i <= max; i++)
             {
                 this._splashScreenVm.LoadingLabel = $"Loaded {i} / {max} Dogecoin";

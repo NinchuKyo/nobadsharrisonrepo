@@ -1,11 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using AOERandomizer.View.Controls;
 
 namespace AOERandomizer.View.Pages
 {
     /// <summary>
     /// Interaction logic for CoinFlipPage.xaml.
     /// </summary>
-    public partial class CoinFlipPage : UserControl
+    internal partial class CoinFlipPage : FroggoPageBase
     {
         /// <summary>
         /// Default constructor.

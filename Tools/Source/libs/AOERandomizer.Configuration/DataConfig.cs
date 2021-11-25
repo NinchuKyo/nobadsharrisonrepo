@@ -5,6 +5,6 @@
     /// </summary>
     public class DataConfig
     {
-        // TODO: Fill this class with models (make that proj) to persist
+        // TODO: Fill this class with models (make that proj?) to persist
     }
 }

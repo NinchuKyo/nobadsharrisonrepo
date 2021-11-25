@@ -1,11 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using AOERandomizer.View.Controls;
 
 namespace AOERandomizer.View.Pages
 {
     /// <summary>
     /// Interaction logic for CivsPage.xaml.
     /// </summary>
-    public partial class CivsPage : UserControl
+    internal partial class CivsPage : FroggoPageBase
     {
         /// <summary>
         /// Default constructor.

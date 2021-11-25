@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\Buttons\Home.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Resources\Media\Sound\Music\background_music.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -30,6 +34,7 @@
     <Resource Include="Resources\Cursors\arrow.cur" />
     <Resource Include="Resources\Cursors\sparky.cur" />
     <Resource Include="Resources\Images\background.jpg" />
+    <Resource Include="Resources\Images\Buttons\Home.png" />
     <Resource Include="Resources\Images\froggo_icon.ico" />
     <Resource Include="Resources\Images\app_splash.png" />
     <Resource Include="Resources\Images\close_button.png" />
@@ -39,10 +44,10 @@
     <Resource Include="Resources\Images\minimize_button.png" />
     <Resource Include="Resources\Images\minimize_button_hovered.png" />
     <Resource Include="Resources\Images\minimize_button_pressed.png" />
-	<Resource Include="Resources\Images\MainWindow\Civs.png" />
-	<Resource Include="Resources\Images\MainWindow\CoinFlip.png" />
-	<Resource Include="Resources\Images\MainWindow\Maps.png" />
-	<Resource Include="Resources\Images\MainWindow\Teams.png" />
+	<Resource Include="Resources\Images\Buttons\Civs.png" />
+	<Resource Include="Resources\Images\Buttons\CoinFlip.png" />
+	<Resource Include="Resources\Images\Buttons\Maps.png" />
+	<Resource Include="Resources\Images\Buttons\Teams.png" />
     <Resource Include="Resources\Images\ScrollBar\Down_Arrow_Default.png" />
     <Resource Include="Resources\Images\ScrollBar\Down_Arrow_MouseOver.png" />
     <Resource Include="Resources\Images\ScrollBar\Thumb_Icon_Default.png" />

@@ -9,7 +9,7 @@ namespace AOERandomizer.ViewModel.Navigation
     {
         private ViewModelBase? _selectedVm;
 
-        public ViewModelBase? SelectedVm
+        internal ViewModelBase? SelectedVm
         {
             get => this._selectedVm;
             set { this.SetProperty(ref this._selectedVm, value); }

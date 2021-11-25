@@ -1,11 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using AOERandomizer.View.Controls;
 
 namespace AOERandomizer.View.Pages
 {
     /// <summary>
     /// Interaction logic for TeamsPage.xaml.
     /// </summary>
-    public partial class TeamsPage : UserControl
+    internal partial class TeamsPage : FroggoPageBase
     {
         /// <summary>
         /// Default constructor.

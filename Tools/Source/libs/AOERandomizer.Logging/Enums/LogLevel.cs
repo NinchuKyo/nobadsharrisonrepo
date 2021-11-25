@@ -3,7 +3,7 @@
     /// <summary>
     /// Enum definition for different log message levels.
     /// </summary>
-    public enum LogLevel
+    internal enum LogLevel
     {
         Info,
         Profile,

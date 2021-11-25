@@ -8,7 +8,7 @@ namespace AOERandomizer.Logging
     /// <summary>
     /// Base log implementation.
     /// </summary>
-    public class LogBase : ILog
+    internal class LogBase : ILog
     {
         #region Constants
 

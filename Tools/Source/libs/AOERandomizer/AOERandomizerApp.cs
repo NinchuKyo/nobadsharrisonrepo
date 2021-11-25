@@ -19,19 +19,12 @@ namespace AOERandomizer
 
         #endregion // Constants
 
-        #region Properties
+        #region Members
 
-        /// <summary>
-        /// Gets or sets the application settings.
-        /// </summary>
-        public AppConfig AppSettingsConfig { get; private set; }
+        private AppConfig? _appSettingsConfig;
+        private DataConfig? _appDataConfig;
 
-        /// <summary>
-        /// Gets or sets the application data.
-        /// </summary>
-        public DataConfig AppDataConfig { get; private set; }
-
-        #endregion // Properties
+        #endregion // Members
 
         #region Methods
 
@@ -64,11 +57,11 @@ namespace AOERandomizer
                 {
                     try
                     {
-                        this.AppSettingsConfig = ConfigManager.LoadSettingsConfig();
-                        this.AppDataConfig = ConfigManager.LoadDataConfig();
+                        this._appSettingsConfig = ConfigManager.LoadSettingsConfig();
+                        this._appDataConfig = ConfigManager.LoadDataConfig();
 
-                        this.AppSettingsConfig.EnableMusic = true;
-                        this.AppSettingsConfig.EnableSfx = true;
+                        this._appSettingsConfig.EnableMusic = true;
+                        this._appSettingsConfig.EnableSfx = true;
                     }
                     catch (Exception ex)
                     {
@@ -76,7 +69,7 @@ namespace AOERandomizer
                     }
                 }
 
-                MainWindowViewModel mainWindowVm = new(splashScreenVm, this.AppSettingsConfig, this.AppDataConfig);
+                MainWindowViewModel mainWindowVm = new(splashScreenVm, this._appSettingsConfig, this._appDataConfig);
 
                 using (ApplicationLog.ProfileCtx(LOG_CTX, "Initializing viewmodels"))
                 {
@@ -114,8 +107,8 @@ namespace AOERandomizer
             {
                 try
                 {
-                    ConfigManager.SaveSettingsConfig(this.AppSettingsConfig);
-                    ConfigManager.SaveDataConfig(this.AppDataConfig);
+                    ConfigManager.SaveSettingsConfig(this._appSettingsConfig);
+                    ConfigManager.SaveDataConfig(this._appDataConfig);
                 }
                 catch (Exception ex)
                 {

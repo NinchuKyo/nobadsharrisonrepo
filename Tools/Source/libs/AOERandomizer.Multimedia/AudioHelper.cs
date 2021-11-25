@@ -1,4 +1,5 @@
-﻿using FroggoBase;
+﻿using AOERandomizer.Logging;
+using FroggoBase;
 using System;
 using System.IO;
 using System.Windows.Media;
@@ -22,6 +23,8 @@ namespace AOERandomizer.Multimedia
 
         #region Members
 
+        private static readonly ILog? Log;
+
         private static readonly MediaPlayer ButtonMouseOverSound;
         private static readonly MediaPlayer ButtonClickSound;
         private static readonly MediaPlayer BackgroundMusic;
@@ -38,7 +41,9 @@ namespace AOERandomizer.Multimedia
         /// </summary>
         static AudioHelper()
         {
-            using (FroggoApplication.ApplicationLog.ProfileCtx(LOG_CTX, "Initializing audio helper"))
+            Log = FroggoApplication.ApplicationLog;
+
+            using (Log.ProfileCtx(LOG_CTX, "Initializing audio helper"))
             {
                 ButtonMouseOverUri = new Uri(Path.Combine(Environment.CurrentDirectory, MouseOverSoundPath), UriKind.Relative);
                 ButtonMouseOverSound = new MediaPlayer
@@ -64,7 +69,7 @@ namespace AOERandomizer.Multimedia
                 }
                 catch (Exception ex)
                 {
-                    FroggoApplication.ApplicationLog.ExceptionCtx(LOG_CTX, $"Could not open background music", ex);
+                    Log.ExceptionCtx(LOG_CTX, $"Could not open background music", ex);
                 }
             }
         }
@@ -101,10 +106,10 @@ namespace AOERandomizer.Multimedia
         /// Mutes/unmutes the background music.
         /// </summary>
         /// <param name="mute"></param>
-        public static void SetIsBackgroundMusicMuted(bool mute)
+        public static void ToggleBackgroundMusicMute(bool mute)
         {
             string muteMsg = mute ? "Muting" : "Unmuting";
-            FroggoApplication.ApplicationLog.InfoCtx(LOG_CTX, $"{muteMsg} background music");
+            Log.InfoCtx(LOG_CTX, $"{muteMsg} background music");
 
             BackgroundMusic.IsMuted = mute;
         }
@@ -116,7 +121,7 @@ namespace AOERandomizer.Multimedia
         /// <param name="e">The event arguments.</param>
         private static void BackgroundMusic_MediaEnded(object? sender, EventArgs e)
         {
-            FroggoApplication.ApplicationLog.InfoCtx(LOG_CTX, $"Background music ended - restarting");
+            Log.InfoCtx(LOG_CTX, $"Background music ended - restarting");
             BackgroundMusic.Position = TimeSpan.Zero;
             BackgroundMusic.Play();
         }
@@ -135,7 +140,7 @@ namespace AOERandomizer.Multimedia
             }
             catch (Exception ex)
             {
-                FroggoApplication.ApplicationLog.ExceptionCtx(LOG_CTX, $"Could not open sound effect '{uri.LocalPath}'", ex);
+                Log.ExceptionCtx(LOG_CTX, $"Could not open sound effect '{uri.LocalPath}'", ex);
             }
         }
 
