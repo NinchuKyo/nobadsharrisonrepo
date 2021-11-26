@@ -5,6 +5,7 @@
     /// </summary>
     internal enum LogLevel
     {
+        Debug,
         Info,
         Profile,
         Warning,

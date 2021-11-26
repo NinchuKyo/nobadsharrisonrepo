@@ -28,6 +28,13 @@ namespace AOERandomizer.Logging
         void InfoCtx(string context, string message);
 
         /// <summary>
+        /// Logs a debug message with context.
+        /// </summary>
+        /// <param name="context">Log context.</param>
+        /// <param name="message">Log message.</param>
+        void DebugCtx(string context, string message);
+
+        /// <summary>
         /// Logs a profile message with context.
         /// </summary>
         /// <param name="context">Log context.</param>

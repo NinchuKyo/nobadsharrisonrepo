@@ -1,7 +1,10 @@
 ﻿using AOERandomizer.Logging;
+using AOERandomizer.RandomGeneration;
 using FroggoBase;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Media;
 
 namespace AOERandomizer.Multimedia
@@ -35,6 +38,8 @@ namespace AOERandomizer.Multimedia
         private static readonly Uri ButtonMouseOverUri;
         private static readonly Uri ButtonClickUri;
 
+        private static readonly List<string> Songs;
+
         #endregion // Members
 
         #region Constructors
@@ -67,8 +72,20 @@ namespace AOERandomizer.Multimedia
 
                 try
                 {
+                    Songs = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, MusicFolder), "*.wav").ToList();
                     BackgroundMusic.MediaEnded += new EventHandler(BackgroundMusic_MediaEnded);
-                    BackgroundMusic.Open(new Uri(Path.Combine(Environment.CurrentDirectory, BackgroundMusicPath), UriKind.Relative));
+
+                    // Pick a random song to play first...
+                    if (Songs.Any())
+                    {
+                        string song = Songs[MasterRNG.GetRandomNumberFrom(0, Songs.Count - 1)];
+                        BackgroundMusic.Open(new Uri(song, UriKind.Relative));
+                        Songs.Remove(song);
+                    }
+                    else
+                    {
+                        Log.WarningCtx(LOG_CTX, $"No songs were found in the music folder '{MusicFolder}'");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -124,8 +141,29 @@ namespace AOERandomizer.Multimedia
         /// <param name="e">The event arguments.</param>
         private static void BackgroundMusic_MediaEnded(object? sender, EventArgs e)
         {
-            Log.InfoCtx(LOG_CTX, $"Background music ended - restarting");
+            Log.InfoCtx(LOG_CTX, $"Background music ended - picking next song");
             BackgroundMusic.Position = TimeSpan.Zero;
+
+            // Pick a random song to play first...
+            if (!Songs.Any())
+            {
+                Log.WarningCtx(LOG_CTX, $"Ran out of songs to loop through - reshuffling");
+
+                try
+                {
+                    Songs.AddRange(Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, MusicFolder), "*.wav"));
+                }
+                catch (Exception ex)
+                {
+                    Log.ExceptionCtx(LOG_CTX, $"Could not open background music", ex);
+                }
+
+            }
+
+            string song = Songs[MasterRNG.GetRandomNumberFrom(0, Songs.Count - 1)];
+            BackgroundMusic.Open(new Uri(song, UriKind.Relative));
+            Songs.Remove(song);
+
             BackgroundMusic.Play();
         }
 

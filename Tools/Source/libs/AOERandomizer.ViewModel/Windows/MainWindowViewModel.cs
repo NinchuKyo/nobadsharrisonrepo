@@ -1,5 +1,6 @@
 ﻿using AOERandomizer.Configuration;
 using AOERandomizer.Logging;
+using AOERandomizer.RandomGeneration;
 using AOERandomizer.ViewModel.Base;
 using AOERandomizer.ViewModel.Navigation;
 using AOERandomizer.ViewModel.Pages;
@@ -18,6 +19,7 @@ namespace AOERandomizer.ViewModel.Windows
         #region Constants
 
         private const string LOG_CTX = "AOERandomizer.ViewModel.Windows.MainWindowViewModel";
+        private const int MaxDoge = 2000;
 
         #endregion // Constants
 
@@ -32,6 +34,8 @@ namespace AOERandomizer.ViewModel.Windows
         private readonly NavigationViewModel _navManager;
         private readonly HomePageViewModel _homePageVm;
 
+        private readonly Random _random;
+
         #endregion // Members
 
         #region Constructors
@@ -44,6 +48,8 @@ namespace AOERandomizer.ViewModel.Windows
         /// <param name="dataConfig">Data configuration.</param>
         public MainWindowViewModel(SplashScreenWindowViewModel splashScreenVm, AppConfig settingsConfig, DataConfig dataConfig)
         {
+            this._random = new Random(MasterRNG.GetRandomNumberFrom(0, Int32.MaxValue - 1));
+
             this._splashScreenVm = splashScreenVm;
             this._settingsConfig = settingsConfig;
             this._dataConfig = dataConfig;
@@ -92,11 +98,12 @@ namespace AOERandomizer.ViewModel.Windows
                 // Load the home page viewmodel...
                 this._homePageVm.Load();
 
-                // Simulate some work being done (for the lols)
-                int max = 500;
+                // Simulate some work being done (for the lols, and to 'warm up' the RNG)
+                int max = this._random.Next(MaxDoge + 1);
                 for (int i = 0; i <= max; i++)
                 {
                     this._splashScreenVm.LoadingLabel = $"Loaded {i} / {max} Dogecoin";
+                    MasterRNG.GetRandomNumberFrom(0, this._random.Next());
                     Thread.Sleep(1);
                 }
 

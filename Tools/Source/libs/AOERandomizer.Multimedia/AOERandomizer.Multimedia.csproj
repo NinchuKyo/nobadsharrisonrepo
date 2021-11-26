@@ -8,7 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Media\Sound\Music\background_music.wav">
+    <Content Include="Resources\Media\Sound\Music\aoe4 remix.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\aoe4 theme.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\scheming weasel.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\o fortuna.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\Ievan polkka.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\monkeys spinning monkeys.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\rick rolld.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\man comes around.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\fruugs.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Media\Sound\SFX\button_click.wav">
@@ -23,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AOERandomizer.RandomGeneration\AOERandomizer.RandomGeneration.csproj" />
     <ProjectReference Include="..\base\FroggoBase\FroggoBase.csproj" />
   </ItemGroup>
 

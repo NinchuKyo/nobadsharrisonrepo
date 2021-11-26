@@ -66,6 +66,16 @@ namespace AOERandomizer.Logging
         }
 
         /// <inheritdoc />
+        public void DebugCtx(string context, string message)
+        {
+#if DEBUG
+            string timestamp = DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture);
+            this.WriteToConsole(timestamp, LogLevel.Debug, ConsoleColor.Magenta, context, message);
+            this.WriteToStream(timestamp, "Debug", context, message);
+#endif
+        }
+
+        /// <inheritdoc />
         public void ProfileMsg(string context, string message)
         {
             string timestamp = DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture);
@@ -114,6 +124,9 @@ namespace AOERandomizer.Logging
 
             switch (level)
             {
+                case LogLevel.Debug:
+                    Console.Write("Debug");
+                    break;
                 case LogLevel.Info:
                     Console.Write("Info");
                     break;
