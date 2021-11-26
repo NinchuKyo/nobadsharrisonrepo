@@ -4,10 +4,11 @@ using System.Windows.Data;
 
 namespace AOERandomizer.View.Converters
 {
+    /// <summary>
+    /// Scroll limit converter for scrollbar view.
+    /// </summary>
     internal class ScrollLimitConverter : IMultiValueConverter
     {
-        private const string LOG_CTX = "AOERandomizer.View.Converters";
-
         /// <inheritdoc />
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

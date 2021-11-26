@@ -5,8 +5,11 @@ namespace AOERandomizer.ViewModel.Enums
     /// <summary>
     /// Enum for the different types of editable-data this application can access.
     /// </summary>
-    public enum EPageName
+    internal enum EPageName
     {
+        [Display(Name = "Home")]
+        Home = 0,
+
         [Display(Name = "Teams")]
         Teams,
 

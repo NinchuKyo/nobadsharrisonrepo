@@ -1,10 +1,23 @@
-﻿namespace AOERandomizer.Configuration
+﻿using AOERandomizer.Model;
+
+namespace AOERandomizer.Configuration
 {
     /// <summary>
     /// Application data config definition.
     /// </summary>
-    public class DataConfig
+    public class DataConfig : ModelBase
     {
-        // TODO: Fill this class with models (make that proj) to persist
+        private TeamsPageModel _teamsPageData;
+
+        public DataConfig()
+        {
+            this._teamsPageData = new TeamsPageModel();
+        }
+
+        public TeamsPageModel TeamsPageData
+        {
+            get { return this._teamsPageData; }
+            set { this.SetProperty(ref this._teamsPageData, value); }
+        }
     }
 }

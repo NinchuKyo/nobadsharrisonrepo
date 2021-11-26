@@ -27,7 +27,7 @@ namespace AOERandomizer.Logging
         /// <param name="log">Logger.</param>
         /// <param name="context">Log context.</param>
         /// <param name="message">Log message.</param>
-        public LogProfile(ILog log, string context, string message)
+        internal LogProfile(ILog log, string context, string message)
         {
             this._log = log;
             this._context = context;
@@ -56,7 +56,7 @@ namespace AOERandomizer.Logging
         /// <returns>The human-readable time string.</returns>
         private static string GetTimeString(TimeSpan timespan)
         {
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builder = new();
 
             if (timespan.Hours > 0)
             {

@@ -19,7 +19,7 @@ namespace AOERandomizer.Logging
                 Directory.CreateDirectory(folder);
             }
 
-            // TODO: Should probably make different log types for each target...combine them for now..
+            // TODO: Should probably make different log types for each target...combine them for now
             return new LogBase(folder);
         }
     }

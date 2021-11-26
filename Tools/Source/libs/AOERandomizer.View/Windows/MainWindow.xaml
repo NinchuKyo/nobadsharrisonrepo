@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:AOERandomizer.View.Converters"
-        xmlns:pageVms="clr-namespace:AOERandomizer.ViewModel.Pages;assembly=AOERandomizer.ViewModel"
-        xmlns:pageViews="clr-namespace:AOERandomizer.View.Pages"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -19,88 +17,12 @@
         MouseDown="MainWindow_MouseDown"
         Loaded="MainWindow_Loaded">
     <Window.Resources>
-        <converters:ScrollLimitConverter x:Key="ScrollLimitConverter"/>
-        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
-
-        <ImageBrush x:Key="UpArrow_Default" ImageSource="/AOERandomizer.Multimedia;component/Resources/Images/ScrollBar/Up_Arrow_Default.png"/>
-        <ImageBrush x:Key="DownArrow_Default" ImageSource="/AOERandomizer.Multimedia;component/Resources/Images/ScrollBar/Down_Arrow_Default.png"/>
-
-        <Style TargetType="ScrollBar">
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="True"/>
-
-            <Style.Triggers>
-                <Trigger Property="Orientation" Value="Vertical">
-                    <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}"/>
-                    <Setter Property="Margin" Value="10"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
-            <Grid Cursor="/AOERandomizer.Multimedia;component/Resources/Cursors/arrow.cur">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="30" />
-                </Grid.RowDefinitions>
-
-                <Border Grid.Row="1"
-                        CornerRadius="20"
-                        Width="20"
-                        Margin="5"
-                        Background="#664D0168" />
-
-                <RepeatButton x:Name="rb_Up"
-                              Grid.Row="0"
-                              Focusable="False"
-                              Command="ScrollBar.LineUpCommand"
-                              Background="{StaticResource UpArrow_Default}"
-                              Style="{StaticResource ScrollBar_UpArrow}"/>
-
-                <RepeatButton x:Name="rb_Down"
-                              Grid.Row="2"
-                              Focusable="False"
-                              Command="ScrollBar.LineDownCommand"
-                              Background="{StaticResource DownArrow_Default}"
-                              Style="{StaticResource ScrollBar_DownArrow}"/>
-
-                <Track x:Name="PART_Track"
-                       Grid.Row="1"
-                       ViewportSize="NaN"
-                       IsDirectionReversed="True">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="ScrollBar.PageUpCommand"
-                                      Style="{StaticResource ScrollBar_Track}"/>
-                    </Track.DecreaseRepeatButton>
-
-                    <Track.Thumb>
-                        <Thumb Style="{StaticResource ScrollBar_Thumb}"/>
-                    </Track.Thumb>
-
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="ScrollBar.PageDownCommand"
-                                      Style="{StaticResource ScrollBar_Track}"/>
-                    </Track.IncreaseRepeatButton>
-                </Track>
-            </Grid>
-
-            <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}, Path=VerticalOffset}" Value="0">
-                    <Setter TargetName="rb_Up" Property="IsEnabled" Value="False"/>
-                </DataTrigger>
-                <DataTrigger Value="True">
-                    <DataTrigger.Binding>
-                        <MultiBinding Converter="{StaticResource ScrollLimitConverter}">
-                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}" Path="VerticalOffset"/>
-                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}" Path="ScrollableHeight"/>
-                        </MultiBinding>
-                    </DataTrigger.Binding>
-
-                    <Setter TargetName="rb_Down" Property="IsEnabled" Value="False"/>
-                </DataTrigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter"
+                                                 True="Visible"
+                                                 False="Collapsed"/>
+        <converters:BooleanToVisibilityConverter x:Key="InverseBoolToVisConverter"
+                                                 True="Collapsed"
+                                                 False="Visible"/>
     </Window.Resources>
     <Grid>
         <Border BorderThickness="5"
@@ -121,8 +43,8 @@
                             MediaEnded="BackgroundVideo_MediaEnded"/>
                     </VisualBrush.Visual>
                 </VisualBrush>
-
             </Border.Background>
+            
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -151,104 +73,62 @@
                             Grid.Row="0"
                             Grid.Column="2"
                             Margin="5">
-                    <Button Margin="4"
+                    <Button Style="{StaticResource MainWindowMuteSfxBtnStyle}"
+                            Margin="4"
+                            BorderThickness="0"
+                            Width="45"
+                            Height="45"
+                            Visibility="{Binding Path=AppSettings.EnableSfx, Converter={StaticResource BoolToVisConverter}}"
+                            MouseEnter="Button_MouseEnter"
+                            Click="ToggleMuteSfxButton_Click" />
+                    <Button Style="{StaticResource MainWindowUnmuteSfxBtnStyle}"
+                            Margin="4"
+                            BorderThickness="0"
+                            Width="45"
+                            Height="45"
+                            Visibility="{Binding Path=AppSettings.EnableSfx, Converter={StaticResource InverseBoolToVisConverter}}"
+                            MouseEnter="Button_MouseEnter"
+                            Click="ToggleMuteSfxButton_Click" />
+                    <Button Style="{StaticResource MainWindowMuteMusicBtnStyle}"
+                            Margin="4"
+                            BorderThickness="0"
+                            Width="45"
+                            Height="45"
+                            Visibility="{Binding Path=AppSettings.EnableMusic, Converter={StaticResource BoolToVisConverter}}"
+                            MouseEnter="Button_MouseEnter"
+                            Click="ToggleMuteMusicButton_Click" />
+                    <Button Style="{StaticResource MainWindowUnmuteMusicBtnStyle}"
+                            Margin="4"
+                            BorderThickness="0"
+                            Width="45"
+                            Height="45"
+                            Visibility="{Binding Path=AppSettings.EnableMusic, Converter={StaticResource InverseBoolToVisConverter}}"
+                            MouseEnter="Button_MouseEnter"
+                            Click="ToggleMuteMusicButton_Click" />
+                    <Button Style="{StaticResource MainWindowMinimizeBtnStyle}"
+                            Margin="4"
                             BorderThickness="0"
                             Width="45"
                             Height="45"
                             MouseEnter="Button_MouseEnter"
-                            Click="Minimize_Button_Click">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-
-                                            <Border x:Name="border">
-                                                <Grid>
-                                                    <Image x:Name="buttonImg"
-                                                           Source="/AOERandomizer.Multimedia;component/Resources/Images/minimize_button.png"
-                                                           Stretch="UniformToFill"/>
-                                                </Grid>
-                                            </Border>
-
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/minimize_button_hovered.png" />
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/minimize_button_pressed.png" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button Margin="4"
+                            Click="Minimize_Button_Click" />
+                    <Button Style="{StaticResource MainWindowCloseBtnStyle}"
+                            Margin="4"
                             BorderThickness="0"
                             Width="50"
                             Height="50"
                             MouseEnter="Button_MouseEnter"
                             Click="Close_Button_Click">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-
-                                            <Border x:Name="border">
-                                                <Grid>
-                                                    <Image x:Name="buttonImg"
-                                                           Source="/AOERandomizer.Multimedia;component/Resources/Images/close_button.png"
-                                                           Stretch="UniformToFill"/>
-                                                </Grid>
-                                            </Border>
-
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/close_button_hovered.png" />
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter TargetName="buttonImg" Property="Source" Value="/AOERandomizer.Multimedia;component/Resources/Images/close_button_pressed.png" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
                     </Button>
                 </StackPanel>
-
 
                 <ScrollViewer Grid.Row="1"
                               Grid.ColumnSpan="3"
                               VerticalScrollBarVisibility="Visible"
                               HorizontalScrollBarVisibility="Disabled">
-                    <ContentControl Content="{Binding SelectedVm}">
-                        <ContentControl.Resources>
-                            <DataTemplate DataType="{x:Type pageVms:HomePageViewModel}">
-                                <pageViews:HomePage/>
-                            </DataTemplate>
-
-                            <DataTemplate DataType="{x:Type pageVms:TeamsPageViewModel}">
-                                <pageViews:TeamsPage/>
-                            </DataTemplate>
-
-                            <DataTemplate DataType="{x:Type pageVms:CivsPageViewModel}">
-                                <pageViews:CivsPage/>
-                            </DataTemplate>
-
-                            <DataTemplate DataType="{x:Type pageVms:MapsPageViewModel}">
-                                <pageViews:MapsPage/>
-                            </DataTemplate>
-
-                            <DataTemplate DataType="{x:Type pageVms:CoinFlipPageViewModel}">
-                                <pageViews:CoinFlipPage/>
-                            </DataTemplate>
-                        </ContentControl.Resources>
-                    </ContentControl>
+                    <StackPanel>
+                        <ContentControl Content="{Binding SelectedVm}" />
+                    </StackPanel>
                 </ScrollViewer>
 
                 <TextBlock Grid.Row="2"

@@ -1,7 +1,10 @@
 ﻿using AOERandomizer.Configuration;
+using AOERandomizer.Logging;
+using AOERandomizer.RandomGeneration;
 using AOERandomizer.ViewModel.Base;
 using AOERandomizer.ViewModel.Navigation;
 using AOERandomizer.ViewModel.Pages;
+using FroggoBase;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -13,15 +16,25 @@ namespace AOERandomizer.ViewModel.Windows
     /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
+        #region Constants
+
+        private const string LOG_CTX = "AOERandomizer.ViewModel.Windows.MainWindowViewModel";
+        private const int MaxDoge = 2000;
+
+        #endregion // Constants
+
         #region Members
 
         private readonly SplashScreenWindowViewModel _splashScreenVm;
         private readonly AppConfig _settingsConfig;
         private readonly DataConfig _dataConfig;
 
-        private readonly NavigationViewModel _navManager;
+        private readonly ILog? _log;
 
+        private readonly NavigationViewModel _navManager;
         private readonly HomePageViewModel _homePageVm;
+
+        private readonly Random _random;
 
         #endregion // Members
 
@@ -35,16 +48,21 @@ namespace AOERandomizer.ViewModel.Windows
         /// <param name="dataConfig">Data configuration.</param>
         public MainWindowViewModel(SplashScreenWindowViewModel splashScreenVm, AppConfig settingsConfig, DataConfig dataConfig)
         {
+            this._random = new Random(MasterRNG.GetRandomNumberFrom(0, Int32.MaxValue - 1));
+
             this._splashScreenVm = splashScreenVm;
             this._settingsConfig = settingsConfig;
             this._dataConfig = dataConfig;
 
-            this._navManager = new NavigationViewModel();
+            this._log = FroggoApplication.ApplicationLog;
 
-            this._homePageVm = new HomePageViewModel(settingsConfig, this._navManager);
+            this._navManager = new NavigationViewModel();
+            this._homePageVm = new HomePageViewModel(settingsConfig, this._navManager, dataConfig);
 
             this._navManager.PropertyChanged += this.NavManager_PropertyChanged;
             this._navManager.SelectedVm = this._homePageVm;
+
+            this._log.InfoCtx(LOG_CTX, "MainWindowViewmodel created.");
         }
 
         #endregion // Constructors
@@ -71,27 +89,35 @@ namespace AOERandomizer.ViewModel.Windows
         #region Methods
 
         /// <summary>
-        /// Loads any necessary data or dependencies for the application.
+        /// Loads any necessary data or dependencies for the main window.
         /// </summary>
         public void Load()
         {
-            // Load the viewmodels for our pages (if needed)...
-            this._homePageVm.Load();
-
-            // TODO: Put other loading code here (or call other viewmodel Load()'s that need to do stuff before the main window displays)
-
-            // Simulate some work being done (for the lols)
-            int max = 1000;
-            for (int i = 0; i <= max; i++)
+            using (this._log.ProfileCtx(LOG_CTX, "Loading MainWindowViewModel"))
             {
-                this._splashScreenVm.LoadingLabel = $"Loaded {i} / {max} Dogecoin";
-                Thread.Sleep(1);
-            }
+                // Load the home page viewmodel...
+                this._homePageVm.Load();
 
-            this._splashScreenVm.LoadingLabel = "no bnads";
-            Thread.Sleep(1500);
+                // Simulate some work being done (for the lols, and to 'warm up' the RNG)
+                int max = this._random.Next(MaxDoge + 1);
+                for (int i = 0; i <= max; i++)
+                {
+                    this._splashScreenVm.LoadingLabel = $"Loaded {i} / {max} Dogecoin";
+                    MasterRNG.GetRandomNumberFrom(0, this._random.Next());
+                    Thread.Sleep(1);
+                }
+
+                this._splashScreenVm.LoadingLabel = "no bnads";
+                Thread.Sleep(1500);
+            }
         }
 
+        /// <summary>
+        /// Triggers when the nav manager selects a new viewmodel to show.  
+        /// This will tell our main window when to change the page.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void NavManager_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(e.PropertyName) && e.PropertyName.Equals("SelectedVm"))

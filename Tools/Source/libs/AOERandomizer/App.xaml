@@ -1,11 +1,14 @@
 ﻿<base:FroggoApplication x:Class="AOERandomizer.AOERandomizerApp"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:base="clr-namespace:FroggoBase;assembly=FroggoBase">
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:base="clr-namespace:FroggoBase;assembly=FroggoBase">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/ScrollbarStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/ScrollbarStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/ComboBoxStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/PageMappings.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

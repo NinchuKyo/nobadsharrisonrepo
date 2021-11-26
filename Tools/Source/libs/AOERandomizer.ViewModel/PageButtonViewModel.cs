@@ -4,6 +4,9 @@ using AOERandomizer.ViewModel.Extensions;
 
 namespace AOERandomizer.ViewModel
 {
+    /// <summary>
+    /// Base viewmodel for a page navigation button.
+    /// </summary>
     public class PageButtonViewModel : ViewModelBase
     {
         #region Members
@@ -20,7 +23,7 @@ namespace AOERandomizer.ViewModel
         /// </summary>
         /// <param name="categoryName">The category name.</param>
         /// <param name="imageUri">The path to the category's icon.</param>
-        public PageButtonViewModel(EPageName pageName, string imageUri)
+        internal PageButtonViewModel(EPageName pageName, string imageUri)
         {
             this._pageName = pageName;
             this._imageUri = imageUri;
@@ -33,12 +36,15 @@ namespace AOERandomizer.ViewModel
         /// <summary>
         /// Gets or sets the page name.
         /// </summary>
-        public EPageName PageName
+        internal EPageName PageName
         {
             get => this._pageName;
             set => this.SetProperty(ref this._pageName, value);
         }
 
+        /// <summary>
+        /// Gets the button's display name.
+        /// </summary>
         public string DisplayName
         {
             get => this._pageName.GetDisplayName();

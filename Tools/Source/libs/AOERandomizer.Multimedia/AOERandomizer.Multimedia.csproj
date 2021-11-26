@@ -8,7 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Media\Sound\Music\background_music.wav">
+    <Content Include="Resources\Media\Sound\Music\aoe4 remix.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\aoe4 theme.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\scheming weasel.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\o fortuna.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\Ievan polkka.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\monkeys spinning monkeys.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\rick rolld.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\man comes around.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\Music\fruugs.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Media\Sound\SFX\button_click.wav">
@@ -23,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AOERandomizer.RandomGeneration\AOERandomizer.RandomGeneration.csproj" />
     <ProjectReference Include="..\base\FroggoBase\FroggoBase.csproj" />
   </ItemGroup>
 
@@ -30,19 +55,32 @@
     <Resource Include="Resources\Cursors\arrow.cur" />
     <Resource Include="Resources\Cursors\sparky.cur" />
     <Resource Include="Resources\Images\background.jpg" />
+    <Resource Include="Resources\Images\Buttons\music_muted_button.png" />
+    <Resource Include="Resources\Images\Buttons\music_muted_button_hovered.png" />
+    <Resource Include="Resources\Images\Buttons\music_muted_button_pressed.png" />
+    <Resource Include="Resources\Images\Buttons\music_unmuted_button.png" />
+    <Resource Include="Resources\Images\Buttons\music_unmuted_button_hovered.png" />
+    <Resource Include="Resources\Images\Buttons\music_unmuted_button_pressed.png" />
+    <Resource Include="Resources\Images\Buttons\sfx_muted_button.png" />
+    <Resource Include="Resources\Images\Buttons\sfx_muted_button_hovered.png" />
+    <Resource Include="Resources\Images\Buttons\sfx_muted_button_pressed.png" />
+    <Resource Include="Resources\Images\Buttons\sfx_unmuted_button.png" />
+    <Resource Include="Resources\Images\Buttons\sfx_unmuted_button_hovered.png" />
+    <Resource Include="Resources\Images\Buttons\sfx_unmuted_button_pressed.png" />
+    <Resource Include="Resources\Images\PageButtons\Home.png" />
     <Resource Include="Resources\Images\froggo_icon.ico" />
     <Resource Include="Resources\Images\app_splash.png" />
-    <Resource Include="Resources\Images\close_button.png" />
-    <Resource Include="Resources\Images\close_button_hovered.png" />
-    <Resource Include="Resources\Images\close_button_pressed.png" />
+    <Resource Include="Resources\Images\Buttons\close_button.png" />
+    <Resource Include="Resources\Images\Buttons\close_button_hovered.png" />
+    <Resource Include="Resources\Images\Buttons\close_button_pressed.png" />
     <Resource Include="Resources\Images\froggo_title.png" />
-    <Resource Include="Resources\Images\minimize_button.png" />
-    <Resource Include="Resources\Images\minimize_button_hovered.png" />
-    <Resource Include="Resources\Images\minimize_button_pressed.png" />
-	<Resource Include="Resources\Images\MainWindow\Civs.png" />
-	<Resource Include="Resources\Images\MainWindow\CoinFlip.png" />
-	<Resource Include="Resources\Images\MainWindow\Maps.png" />
-	<Resource Include="Resources\Images\MainWindow\Teams.png" />
+    <Resource Include="Resources\Images\Buttons\minimize_button.png" />
+    <Resource Include="Resources\Images\Buttons\minimize_button_hovered.png" />
+    <Resource Include="Resources\Images\Buttons\minimize_button_pressed.png" />
+	<Resource Include="Resources\Images\PageButtons\Civs.png" />
+	<Resource Include="Resources\Images\PageButtons\CoinFlip.png" />
+	<Resource Include="Resources\Images\PageButtons\Maps.png" />
+	<Resource Include="Resources\Images\PageButtons\Teams.png" />
     <Resource Include="Resources\Images\ScrollBar\Down_Arrow_Default.png" />
     <Resource Include="Resources\Images\ScrollBar\Down_Arrow_MouseOver.png" />
     <Resource Include="Resources\Images\ScrollBar\Thumb_Icon_Default.png" />

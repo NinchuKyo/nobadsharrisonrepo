@@ -1,4 +1,6 @@
-﻿using AOERandomizer.Multimedia;
+﻿using AOERandomizer.Configuration;
+using AOERandomizer.Logging;
+using AOERandomizer.Multimedia;
 using AOERandomizer.ViewModel.Windows;
 using FroggoBase;
 using System;
@@ -20,6 +22,12 @@ namespace AOERandomizer.View.Windows
         private const string BackgroundVideoPath = @"Resources\Media\Video\background_video.mp4";
 
         #endregion // Constants
+
+        #region Members
+
+        private static readonly ILog? Log = FroggoApplication.ApplicationLog;
+
+        #endregion // Members
 
         #region Constructors
 
@@ -49,6 +57,34 @@ namespace AOERandomizer.View.Windows
             {
                 this.DragMove();
             }
+        }
+
+        /// <summary>
+        /// Triggers when the mute sound effects button is clicked.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void ToggleMuteSfxButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Button_Click(sender, e);
+            AppConfig settings = ((MainWindowViewModel)this.DataContext).AppSettings;
+            string muteMsg = settings.EnableSfx ? "Muting" : "Unmuting";
+            Log.InfoCtx(LOG_CTX, $"{muteMsg} sound effects");
+
+            settings.EnableSfx = !settings.EnableSfx;
+        }
+
+        /// <summary>
+        /// Triggers when the mute music button is clicked.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void ToggleMuteMusicButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Button_Click(sender, e);
+            AppConfig settings = ((MainWindowViewModel)this.DataContext).AppSettings;
+            settings.EnableMusic = !settings.EnableMusic;
+            AudioHelper.ToggleBackgroundMusicMute(!settings.EnableMusic);
         }
 
         /// <summary>
@@ -106,8 +142,10 @@ namespace AOERandomizer.View.Windows
         /// <param name="e">The event arguments.</param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            AudioHelper.SetIsBackgroundMusicMuted(!((MainWindowViewModel)DataContext).AppSettings.EnableMusic);
-            AudioHelper.PlayBackgroundMusic();
+            if( ((MainWindowViewModel)DataContext).AppSettings.EnableMusic)
+            {
+                AudioHelper.PlayBackgroundMusic();
+            }
         }
 
         /// <summary>
@@ -123,7 +161,7 @@ namespace AOERandomizer.View.Windows
             }
             catch (Exception ex)
             {
-                FroggoApplication.ApplicationLog.ExceptionCtx(LOG_CTX, "Could not play background video", ex);
+                Log.ExceptionCtx(LOG_CTX, "Could not play background video", ex);
             }
         }
 

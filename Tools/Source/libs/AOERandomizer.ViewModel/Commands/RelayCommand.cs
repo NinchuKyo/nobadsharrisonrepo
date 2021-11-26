@@ -6,7 +6,7 @@ namespace AOERandomizer.ViewModel.Commands
     /// <summary>
     /// Relay command class to wrap view-to-viewmodel event triggers.
     /// </summary>
-    public class RelayCommand : ICommand
+    internal class RelayCommand : ICommand
     {
         #region Members
 
@@ -22,7 +22,7 @@ namespace AOERandomizer.ViewModel.Commands
         /// </summary>
         /// <param name="canExecute">Used to determine if this command can be executed.</param>
         /// <param name="execute">Used to execute the command.</param>
-        public RelayCommand(Predicate<object?> canExecute, Action<object?> execute)
+        internal RelayCommand(Predicate<object?> canExecute, Action<object?> execute)
         {
             this._canExecute = canExecute;
             this._execute = execute;

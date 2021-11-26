@@ -1,6 +1,10 @@
-﻿using FroggoBase;
+﻿using AOERandomizer.Logging;
+using AOERandomizer.RandomGeneration;
+using FroggoBase;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Media;
 
 namespace AOERandomizer.Multimedia
@@ -14,13 +18,18 @@ namespace AOERandomizer.Multimedia
 
         private const string LOG_CTX = "AOERandomizer.Multimedia.AudioHelper";
 
-        private const string MouseOverSoundPath = @"Resources\Media\Sound\SFX\button_mouse_over.wav";
-        private const string ButtonClickSoundPath = @"Resources\Media\Sound\SFX\button_click.wav";
-        private const string BackgroundMusicPath = @"Resources\Media\Sound\Music\background_music.wav";
+        private const string SfxFolder = @"Resources\Media\Sound\SFX\";
+        private const string MusicFolder = @"Resources\Media\Sound\Music\";
+
+        private const string MouseOverSoundPath = $"{SfxFolder}button_mouse_over.wav";
+        private const string ButtonClickSoundPath = $"{SfxFolder}button_click.wav";
+        private const string BackgroundMusicPath = $"{MusicFolder}background_music.wav";
 
         #endregion // Constants
 
         #region Members
+
+        private static readonly ILog? Log;
 
         private static readonly MediaPlayer ButtonMouseOverSound;
         private static readonly MediaPlayer ButtonClickSound;
@@ -28,6 +37,8 @@ namespace AOERandomizer.Multimedia
 
         private static readonly Uri ButtonMouseOverUri;
         private static readonly Uri ButtonClickUri;
+
+        private static readonly List<string> Songs;
 
         #endregion // Members
 
@@ -38,7 +49,9 @@ namespace AOERandomizer.Multimedia
         /// </summary>
         static AudioHelper()
         {
-            using (FroggoApplication.ApplicationLog.ProfileCtx(LOG_CTX, "Initializing audio helper"))
+            Log = FroggoApplication.ApplicationLog;
+
+            using (Log.ProfileCtx(LOG_CTX, "Initializing audio helper"))
             {
                 ButtonMouseOverUri = new Uri(Path.Combine(Environment.CurrentDirectory, MouseOverSoundPath), UriKind.Relative);
                 ButtonMouseOverSound = new MediaPlayer
@@ -59,12 +72,24 @@ namespace AOERandomizer.Multimedia
 
                 try
                 {
+                    Songs = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, MusicFolder), "*.wav").ToList();
                     BackgroundMusic.MediaEnded += new EventHandler(BackgroundMusic_MediaEnded);
-                    BackgroundMusic.Open(new Uri(Path.Combine(Environment.CurrentDirectory, BackgroundMusicPath), UriKind.Relative));
+
+                    // Pick a random song to play first...
+                    if (Songs.Any())
+                    {
+                        string song = Songs[MasterRNG.GetRandomNumberFrom(0, Songs.Count - 1)];
+                        BackgroundMusic.Open(new Uri(song, UriKind.Relative));
+                        Songs.Remove(song);
+                    }
+                    else
+                    {
+                        Log.WarningCtx(LOG_CTX, $"No songs were found in the music folder '{MusicFolder}'");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    FroggoApplication.ApplicationLog.ExceptionCtx(LOG_CTX, $"Could not open background music", ex);
+                    Log.ExceptionCtx(LOG_CTX, $"Could not open background music", ex);
                 }
             }
         }
@@ -101,12 +126,18 @@ namespace AOERandomizer.Multimedia
         /// Mutes/unmutes the background music.
         /// </summary>
         /// <param name="mute"></param>
-        public static void SetIsBackgroundMusicMuted(bool mute)
+        public static void ToggleBackgroundMusicMute(bool mute)
         {
-            string muteMsg = mute ? "Muting" : "Unmuting";
-            FroggoApplication.ApplicationLog.InfoCtx(LOG_CTX, $"{muteMsg} background music");
-
-            BackgroundMusic.IsMuted = mute;
+            if (mute && BackgroundMusic.CanPause)
+            {
+                Log.InfoCtx(LOG_CTX, $"Pausing background music");
+                BackgroundMusic.Pause();
+            }
+            else
+            {
+                Log.InfoCtx(LOG_CTX, $"Resuming background music");
+                BackgroundMusic.Play();
+            }
         }
 
         /// <summary>
@@ -116,8 +147,29 @@ namespace AOERandomizer.Multimedia
         /// <param name="e">The event arguments.</param>
         private static void BackgroundMusic_MediaEnded(object? sender, EventArgs e)
         {
-            FroggoApplication.ApplicationLog.InfoCtx(LOG_CTX, $"Background music ended - restarting");
+            Log.InfoCtx(LOG_CTX, $"Background music ended - picking next song");
             BackgroundMusic.Position = TimeSpan.Zero;
+
+            // Pick a random song to play first...
+            if (!Songs.Any())
+            {
+                Log.WarningCtx(LOG_CTX, $"Ran out of songs to loop through - reshuffling");
+
+                try
+                {
+                    Songs.AddRange(Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, MusicFolder), "*.wav"));
+                }
+                catch (Exception ex)
+                {
+                    Log.ExceptionCtx(LOG_CTX, $"Could not open background music", ex);
+                }
+
+            }
+
+            string song = Songs[MasterRNG.GetRandomNumberFrom(0, Songs.Count - 1)];
+            BackgroundMusic.Open(new Uri(song, UriKind.Relative));
+            Songs.Remove(song);
+
             BackgroundMusic.Play();
         }
 
@@ -135,7 +187,7 @@ namespace AOERandomizer.Multimedia
             }
             catch (Exception ex)
             {
-                FroggoApplication.ApplicationLog.ExceptionCtx(LOG_CTX, $"Could not open sound effect '{uri.LocalPath}'", ex);
+                Log.ExceptionCtx(LOG_CTX, $"Could not open sound effect '{uri.LocalPath}'", ex);
             }
         }
 

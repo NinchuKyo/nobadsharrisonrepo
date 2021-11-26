@@ -4,6 +4,7 @@ using AOERandomizer.ViewModel.Windows;
 using FroggoBase;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace AOERandomizer
 {
@@ -15,23 +16,17 @@ namespace AOERandomizer
         #region Constants
 
         private const string LOG_CTX = "AOERandomizerApp.AOERandomizerApp";
+
         private const string LoadingMsg = "Loading...";
 
         #endregion // Constants
 
-        #region Properties
+        #region Members
 
-        /// <summary>
-        /// Gets or sets the application settings.
-        /// </summary>
-        public AppConfig AppSettingsConfig { get; private set; }
+        private AppConfig? _appSettingsConfig;
+        private DataConfig? _appDataConfig;
 
-        /// <summary>
-        /// Gets or sets the application data.
-        /// </summary>
-        public DataConfig AppDataConfig { get; private set; }
-
-        #endregion // Properties
+        #endregion // Members
 
         #region Methods
 
@@ -39,6 +34,8 @@ namespace AOERandomizer
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            this.DispatcherUnhandledException += AOERandomizerApp_DispatcherUnhandledException;
 
             SplashScreenWindow splashScreen;
             SplashScreenWindowViewModel splashScreenVm;
@@ -64,11 +61,8 @@ namespace AOERandomizer
                 {
                     try
                     {
-                        this.AppSettingsConfig = ConfigManager.LoadSettingsConfig();
-                        this.AppDataConfig = ConfigManager.LoadDataConfig();
-
-                        this.AppSettingsConfig.EnableMusic = true;
-                        this.AppSettingsConfig.EnableSfx = true;
+                        this._appSettingsConfig = ConfigManager.LoadSettingsConfig();
+                        this._appDataConfig = ConfigManager.LoadDataConfig();
                     }
                     catch (Exception ex)
                     {
@@ -76,12 +70,8 @@ namespace AOERandomizer
                     }
                 }
 
-                MainWindowViewModel mainWindowVm = new(splashScreenVm, this.AppSettingsConfig, this.AppDataConfig);
-
-                using (ApplicationLog.ProfileCtx(LOG_CTX, "Initializing viewmodels"))
-                {
-                    mainWindowVm.Load();
-                }
+                MainWindowViewModel mainWindowVm = new(splashScreenVm, this._appSettingsConfig, this._appDataConfig);
+                mainWindowVm.Load();
 
                 // Since we're not on the UI thread once we're done we need to use the Dispatcher to create and show the main window
                 this.Dispatcher.Invoke(() =>
@@ -103,6 +93,16 @@ namespace AOERandomizer
         }
 
         /// <summary>
+        /// Triggered when the application experiences an exception that remains unhandled.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void AOERandomizerApp_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            ApplicationLog.ExceptionCtx(LOG_CTX, "Unhandled exception occurred in the application", e.Exception);
+        }
+
+        /// <summary>
         /// Triggered when the main window is closing, but hasn't closed yet.
         /// We want to take this opportunity to save our settings before exiting.
         /// </summary>
@@ -114,8 +114,8 @@ namespace AOERandomizer
             {
                 try
                 {
-                    ConfigManager.SaveSettingsConfig(this.AppSettingsConfig);
-                    ConfigManager.SaveDataConfig(this.AppDataConfig);
+                    ConfigManager.SaveSettingsConfig(this._appSettingsConfig);
+                    ConfigManager.SaveDataConfig(this._appDataConfig);
                 }
                 catch (Exception ex)
                 {
