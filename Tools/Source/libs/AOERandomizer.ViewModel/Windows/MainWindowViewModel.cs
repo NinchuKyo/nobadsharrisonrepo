@@ -57,7 +57,7 @@ namespace AOERandomizer.ViewModel.Windows
             this._log = FroggoApplication.ApplicationLog;
 
             this._navManager = new NavigationViewModel();
-            this._homePageVm = new HomePageViewModel(settingsConfig, this._navManager);
+            this._homePageVm = new HomePageViewModel(settingsConfig, this._navManager, dataConfig);
 
             this._navManager.PropertyChanged += this.NavManager_PropertyChanged;
             this._navManager.SelectedVm = this._homePageVm;

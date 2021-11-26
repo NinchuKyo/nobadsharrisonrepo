@@ -23,8 +23,9 @@ namespace AOERandomizer.ViewModel.Pages
         /// </summary>
         /// <param name="settingsConfig">Application settings config.</param>
         /// <param name="navVm">Viewmodel in charge of navigation.</param>
-        public HomePageViewModel(AppConfig settingsConfig, NavigationViewModel navVm)
-            : base(settingsConfig, navVm)
+        /// <param name="dataConfig">Application data config.</param>
+        public HomePageViewModel(AppConfig settingsConfig, NavigationViewModel navVm, DataConfig dataConfig)
+            : base(settingsConfig, navVm, dataConfig)
         {
             this._log.InfoCtx(LOG_CTX, "HomePageViewModel created");
         }
@@ -60,22 +61,22 @@ namespace AOERandomizer.ViewModel.Pages
                 switch (button.PageName)
                     {
                         case EPageName.Teams:
-                            TeamsPageViewModel teamPageVm = new(this.SettingsConfig, this._navVm);
+                            TeamsPageViewModel teamPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                             teamPageVm.Load();
                             this._navVm.SelectedVm = teamPageVm;
                             break;
                         case EPageName.Civs:
-                            CivsPageViewModel civsPageVm = new(this.SettingsConfig, this._navVm);
+                            CivsPageViewModel civsPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                             civsPageVm.Load();
                             this._navVm.SelectedVm = civsPageVm;
                             break;
                         case EPageName.Maps:
-                            MapsPageViewModel mapsPageVm = new(this.SettingsConfig, this._navVm);
+                            MapsPageViewModel mapsPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                             mapsPageVm.Load();
                             this._navVm.SelectedVm = mapsPageVm;
                             break;
                         case EPageName.CoinFlip:
-                            CoinFlipPageViewModel coinFlipPageVm = new(this.SettingsConfig, this._navVm);
+                            CoinFlipPageViewModel coinFlipPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                             coinFlipPageVm.Load();
                             this._navVm.SelectedVm = coinFlipPageVm;
                             break;

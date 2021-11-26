@@ -128,10 +128,16 @@ namespace AOERandomizer.Multimedia
         /// <param name="mute"></param>
         public static void ToggleBackgroundMusicMute(bool mute)
         {
-            string muteMsg = mute ? "Muting" : "Unmuting";
-            Log.InfoCtx(LOG_CTX, $"{muteMsg} background music");
-
-            BackgroundMusic.IsMuted = mute;
+            if (mute && BackgroundMusic.CanPause)
+            {
+                Log.InfoCtx(LOG_CTX, $"Pausing background music");
+                BackgroundMusic.Pause();
+            }
+            else
+            {
+                Log.InfoCtx(LOG_CTX, $"Resuming background music");
+                BackgroundMusic.Play();
+            }
         }
 
         /// <summary>

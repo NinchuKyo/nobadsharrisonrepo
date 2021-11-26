@@ -4,6 +4,7 @@ using AOERandomizer.ViewModel.Windows;
 using FroggoBase;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace AOERandomizer
 {
@@ -33,6 +34,8 @@ namespace AOERandomizer
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            this.DispatcherUnhandledException += AOERandomizerApp_DispatcherUnhandledException;
 
             SplashScreenWindow splashScreen;
             SplashScreenWindowViewModel splashScreenVm;
@@ -87,6 +90,16 @@ namespace AOERandomizer
                     }
                 });
             });
+        }
+
+        /// <summary>
+        /// Triggered when the application experiences an exception that remains unhandled.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void AOERandomizerApp_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            ApplicationLog.ExceptionCtx(LOG_CTX, "Unhandled exception occurred in the application", e.Exception);
         }
 
         /// <summary>

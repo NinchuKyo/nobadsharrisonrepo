@@ -16,7 +16,7 @@ namespace AOERandomizer.View.Controls
         /// </summary>
         /// <param name="sender">The object that fired the event.</param>
         /// <param name="e">The event arguments.</param>
-        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        protected void Button_MouseEnter(object sender, MouseEventArgs e)
         {
             if (((PageBaseViewModel)this.DataContext).SettingsConfig.EnableSfx)
             {
@@ -29,7 +29,7 @@ namespace AOERandomizer.View.Controls
         /// </summary>
         /// <param name="sender">The object that fired the event.</param>
         /// <param name="e">The event arguments.</param>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        protected void Button_Click(object sender, RoutedEventArgs e)
         {
             if (((PageBaseViewModel)this.DataContext).SettingsConfig.EnableSfx)
             {

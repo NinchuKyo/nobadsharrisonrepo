@@ -22,8 +22,9 @@ namespace AOERandomizer.ViewModel.Pages
         /// </summary>
         /// <param name="settingsConfig">Application settings config.</param>
         /// <param name="navVm">Viewmodel in charge of navigation.</param>
-        public CoinFlipPageViewModel(AppConfig settingsConfig, NavigationViewModel navVm)
-            : base(settingsConfig, navVm)
+        /// <param name="dataConfig">Application data config.</param>
+        public CoinFlipPageViewModel(AppConfig settingsConfig, NavigationViewModel navVm, DataConfig dataConfig)
+            : base(settingsConfig, navVm, dataConfig)
         {
             this._log.InfoCtx(LOG_CTX, "CoinFlipPageViewModel created");
         }
@@ -53,7 +54,7 @@ namespace AOERandomizer.ViewModel.Pages
                 switch (button.PageName)
                 {
                     case EPageName.Home:
-                        HomePageViewModel homePageVm = new(this.SettingsConfig, this._navVm);
+                        HomePageViewModel homePageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         homePageVm.Load();
                         this._navVm.SelectedVm = homePageVm;
                         break;

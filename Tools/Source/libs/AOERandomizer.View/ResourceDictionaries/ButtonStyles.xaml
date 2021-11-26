@@ -217,4 +217,15 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="CommonButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush Opacity="100" EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#D8FF0000"/>
+                    <GradientStop Color="#E5954E07" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

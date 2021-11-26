@@ -142,8 +142,10 @@ namespace AOERandomizer.View.Windows
         /// <param name="e">The event arguments.</param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            AudioHelper.ToggleBackgroundMusicMute(!((MainWindowViewModel)DataContext).AppSettings.EnableMusic);
-            AudioHelper.PlayBackgroundMusic();
+            if( ((MainWindowViewModel)DataContext).AppSettings.EnableMusic)
+            {
+                AudioHelper.PlayBackgroundMusic();
+            }
         }
 
         /// <summary>

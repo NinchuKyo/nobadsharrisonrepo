@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AOERandomizer.Model\AOERandomizer.Model.csproj" />
     <ProjectReference Include="..\AOERandomizer.Multimedia\AOERandomizer.Multimedia.csproj" />
     <ProjectReference Include="..\AOERandomizer.ViewModel\AOERandomizer.ViewModel.csproj" />
   </ItemGroup>

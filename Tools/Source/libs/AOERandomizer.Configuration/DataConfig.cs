@@ -7,6 +7,17 @@ namespace AOERandomizer.Configuration
     /// </summary>
     public class DataConfig : ModelBase
     {
-        // TODO: Fill this class with models to persist
+        private TeamsPageModel _teamsPageData;
+
+        public DataConfig()
+        {
+            this._teamsPageData = new TeamsPageModel();
+        }
+
+        public TeamsPageModel TeamsPageData
+        {
+            get { return this._teamsPageData; }
+            set { this.SetProperty(ref this._teamsPageData, value); }
+        }
     }
 }

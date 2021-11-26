@@ -6,6 +6,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/ScrollbarStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/ComboBoxStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AOERandomizer.View;component/ResourceDictionaries/PageMappings.xaml"/>
             </ResourceDictionary.MergedDictionaries>

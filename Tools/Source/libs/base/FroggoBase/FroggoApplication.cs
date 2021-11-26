@@ -24,7 +24,7 @@ namespace FroggoBase
         /// </summary>
         static FroggoApplication()
         {
-            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss-tt");
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-");
             string app = typeof(FroggoApplication).Name;
             string filename = $"{timestamp}_{app}";
 

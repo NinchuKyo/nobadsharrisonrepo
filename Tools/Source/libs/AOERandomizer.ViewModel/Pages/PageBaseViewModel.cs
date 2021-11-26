@@ -42,9 +42,11 @@ namespace AOERandomizer.ViewModel.Pages
         /// </summary>
         /// <param name="settingsConfig">Application settings config.</param>
         /// <param name="navVm">Viewmodel in charge of navigation.</param>
-        internal PageBaseViewModel(AppConfig settingsConfig, NavigationViewModel navVm)
+        /// <param name="dataConfig">Application data config.</param>
+        internal PageBaseViewModel(AppConfig settingsConfig, NavigationViewModel navVm, DataConfig dataConfig)
         {
             this.SettingsConfig = settingsConfig;
+            this.DataConfig = dataConfig;
             this._navVm = navVm;
             this._log = FroggoApplication.ApplicationLog;
 
@@ -76,6 +78,11 @@ namespace AOERandomizer.ViewModel.Pages
         /// Gets or sets the application settings configuration.
         /// </summary>
         public AppConfig SettingsConfig { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the application data configuration.
+        /// </summary>
+        public DataConfig DataConfig { get; private set; }
 
         /// <summary>
         /// Gets the page navigation buttons.
