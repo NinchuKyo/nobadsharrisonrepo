@@ -39,6 +39,9 @@ namespace AOERandomizer.RandomGeneration
                 result = RandomNumberGenerator.GetInt32(0, Int32.MaxValue);
             }
 
+            Random rand = new Random(53463456);
+            rand.NextInt64();
+
             result = RandomNumberGenerator.GetInt32(fromInclusive, toInclusive + 1);
 
             Log.DebugCtx(LOG_CTX, $"Generated random number between {fromInclusive} and {toInclusive} = {result}");

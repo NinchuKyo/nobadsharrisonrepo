@@ -6,6 +6,7 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                          xmlns:controls="clr-namespace:AOERandomizer.View.Controls"
+                         xmlns:wheel="clr-namespace:AOERandomizer.View.SpinningWheel"
                          xmlns:extensions="clr-namespace:AOERandomizer.View.Converters"
                          xmlns:modelEnum="clr-namespace:AOERandomizer.Model.Enums;assembly=AOERandomizer.Model"
                          mc:Ignorable="d"
@@ -24,6 +25,17 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+
+        <wheel:SpinningWheel x:Name="wheelDemo"
+                             Grid.Row="1"
+                             Grid.Column="1"
+                             Size="380"
+                             FontWeight="Bold"
+                             FontSize="15"
+                             BackgroundColor="DarkOrange"
+                             ForegroundColor="Black"
+                             HideLabels="False"
+                             Slices="{Binding Players, UpdateSourceTrigger=PropertyChanged}"/>
 
         <ItemsControl Grid.Row="0"
                       Grid.Column="0"
@@ -250,12 +262,7 @@
                     Height="60"
                     Content="START"
                     MouseEnter="Button_MouseEnter"
-                    Click="Button_Click">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding StartCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                    Click="Start_Button_Click">
             </Button>
             <Button Style="{StaticResource CommonButtonStyle}"
                     Margin="10"
@@ -265,12 +272,7 @@
                     Height="60"
                     Content="AUTO"
                     MouseEnter="Button_MouseEnter"
-                    Click="Button_Click">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding AutoCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                    Click="Auto_Button_Click">
             </Button>
         </StackPanel>
     </Grid>

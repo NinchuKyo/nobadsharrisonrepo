@@ -21,7 +21,7 @@ namespace AOERandomizer.Logging
 
         #region Members
 
-        private StreamWriter _textWriter;
+        private readonly StreamWriter _textWriter;
 
         #endregion // Members
 

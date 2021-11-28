@@ -24,7 +24,7 @@ namespace AOERandomizer.ViewModel.Pages
         #region Members
 
         private string _playerNameText;
-        private bool _isSpinning;
+        private readonly bool _isSpinning;
 
         #endregion // Members
 
@@ -44,7 +44,6 @@ namespace AOERandomizer.ViewModel.Pages
         /// Gets or sets the selected team config changed command.
         /// </summary>
         public ICommand SelectedTeamConfigChangedCommand { get; set; }
-
 
         #endregion // Commands
 
@@ -178,6 +177,7 @@ namespace AOERandomizer.ViewModel.Pages
                 }
 
                 this.DataConfig.TeamsPageData.Players.Add(this.PlayerNameText);
+                this.OnPropertyChanged(nameof(this.Players));
                 this.PlayerNameText = String.Empty;
             }
         }

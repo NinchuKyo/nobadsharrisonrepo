@@ -23,7 +23,7 @@ namespace AOERandomizer.Multimedia
 
         private const string MouseOverSoundPath = $"{SfxFolder}button_mouse_over.wav";
         private const string ButtonClickSoundPath = $"{SfxFolder}button_click.wav";
-        private const string BackgroundMusicPath = $"{MusicFolder}background_music.wav";
+        private const string ButtonWololoSoundPath = $"{SfxFolder}wololo.wav";
 
         #endregion // Constants
 
@@ -33,10 +33,12 @@ namespace AOERandomizer.Multimedia
 
         private static readonly MediaPlayer ButtonMouseOverSound;
         private static readonly MediaPlayer ButtonClickSound;
+        private static readonly MediaPlayer ButtonWololoSound;
         private static readonly MediaPlayer BackgroundMusic;
 
         private static readonly Uri ButtonMouseOverUri;
         private static readonly Uri ButtonClickUri;
+        private static readonly Uri ButtonWololoUri;
 
         private static readonly List<string> Songs;
 
@@ -63,6 +65,12 @@ namespace AOERandomizer.Multimedia
                 ButtonClickSound = new MediaPlayer
                 {
                     Volume = 0.1
+                };
+
+                ButtonWololoUri = new Uri(Path.Combine(Environment.CurrentDirectory, ButtonWololoSoundPath), UriKind.Relative);
+                ButtonWololoSound = new MediaPlayer
+                {
+                    Volume = 0.5
                 };
 
                 BackgroundMusic = new MediaPlayer
@@ -111,7 +119,14 @@ namespace AOERandomizer.Multimedia
         /// </summary>
         public static void PlayButtonClickSound()
         {
-            TryPlaySound(ButtonClickSound, ButtonClickUri);
+            if (MasterRNG.GetRandomNumberFrom(0, 1000) < 55)
+            {
+                TryPlaySound(ButtonWololoSound, ButtonWololoUri);
+            }
+            else
+            {
+                TryPlaySound(ButtonClickSound, ButtonClickUri);
+            }
         }
 
         /// <summary>

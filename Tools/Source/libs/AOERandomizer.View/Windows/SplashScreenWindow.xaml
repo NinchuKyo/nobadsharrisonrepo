@@ -12,7 +12,8 @@
         Height="607"
         Cursor="/AOERandomizer.Multimedia;component/Resources/Cursors/arrow.cur"
         Icon="/AOERandomizer.Multimedia;component/Resources/Images/froggo_icon.ico"
-        Topmost="True">
+        Topmost="True"
+        MouseDown="SplashWindow_MouseDown">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/AOERandomizer.Multimedia;component/Resources/Images/app_splash.png"

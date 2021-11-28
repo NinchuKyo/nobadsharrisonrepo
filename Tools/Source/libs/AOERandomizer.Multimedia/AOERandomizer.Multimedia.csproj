@@ -41,6 +41,9 @@
     <Content Include="Resources\Media\Sound\SFX\button_mouse_over.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Media\Sound\SFX\wololo.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Media\Video\background_video.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -2,7 +2,6 @@
 using AOERandomizer.View.Windows;
 using AOERandomizer.ViewModel.Windows;
 using FroggoBase;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -27,6 +26,15 @@ namespace AOERandomizer
         private DataConfig? _appDataConfig;
 
         #endregion // Members
+
+        #region Constructors
+
+        public AOERandomizerApp()
+        {
+            this.Exit += AOERandomizerApp_Exit;
+        }
+
+        #endregion // Constructors
 
         #region Methods
 
@@ -80,7 +88,6 @@ namespace AOERandomizer
                     {
                         // Initialize the main window, set it as the application main window and close the splash screen
                         MainWindow mainWindow = new();
-                        mainWindow.Closing += new CancelEventHandler(this.OnMainWindowClosing);
                         mainWindow.DataContext = mainWindowVm;
 
                         this.MainWindow = mainWindow;
@@ -102,13 +109,7 @@ namespace AOERandomizer
             ApplicationLog.ExceptionCtx(LOG_CTX, "Unhandled exception occurred in the application", e.Exception);
         }
 
-        /// <summary>
-        /// Triggered when the main window is closing, but hasn't closed yet.
-        /// We want to take this opportunity to save our settings before exiting.
-        /// </summary>
-        /// <param name="sender">Object that triggered the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void OnMainWindowClosing(object? sender, CancelEventArgs e)
+        private void AOERandomizerApp_Exit(object sender, ExitEventArgs e)
         {
             using (ApplicationLog.ProfileCtx(LOG_CTX, "Saving settings and data configurations before shutting down"))
             {
