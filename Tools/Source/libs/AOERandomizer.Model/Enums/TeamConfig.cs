@@ -2,6 +2,9 @@
 
 namespace AOERandomizer.Model.Enums
 {
+    /// <summary>
+    /// Enum definition for different team layout types.
+    /// </summary>
     public enum TeamConfig
     {
         [Display(Name = "2v2")]

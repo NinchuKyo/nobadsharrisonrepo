@@ -18,14 +18,13 @@ namespace AOERandomizer.View.Windows
         #region Constants
 
         private const string LOG_CTX = "AOERandomizer.View.Windows.MainWindow";
-
         private const string BackgroundVideoPath = @"Resources\Media\Video\background_video.mp4";
 
         #endregion // Constants
 
         #region Members
 
-        private static readonly ILog? Log = FroggoApplication.ApplicationLog;
+        private static readonly ILog Log = FroggoApplication.ApplicationLog;
 
         #endregion // Members
 
@@ -39,7 +38,7 @@ namespace AOERandomizer.View.Windows
             this.InitializeComponent();
 
             // Hacky solution - reference the video player in the XAML - must be done after initializing UI components
-            this.backgroundVideo.Source = new Uri(Path.Combine(Environment.CurrentDirectory, BackgroundVideoPath), UriKind.Relative);
+            this.backgroundVideo.Source = new(Path.Combine(Environment.CurrentDirectory, BackgroundVideoPath), UriKind.Relative);
         }
 
         #endregion // Constructors

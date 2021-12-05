@@ -5,6 +5,9 @@ using System.Windows.Controls;
 
 namespace AOERandomizer.View.SpinningWheel.Base
 {
+    /// <summary>
+    /// User control that triggers property changed events.
+    /// </summary>
     public class NotifyPropertyChangedUserControl : UserControl, INotifyPropertyChanged
     {
         /// <inheritdoc />
@@ -16,7 +19,7 @@ namespace AOERandomizer.View.SpinningWheel.Base
         /// <param name="propertyName">(optional) The name of the property to change.</param>
         public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new(propertyName));
         }
 
         /// <summary>

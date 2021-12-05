@@ -11,7 +11,7 @@ namespace AOERandomizer.ViewModel
     {
         #region Members
 
-        private EPageName _pageName;
+        private PageName _pageName;
         private string _imageUri;
 
         #endregion // Members
@@ -23,7 +23,7 @@ namespace AOERandomizer.ViewModel
         /// </summary>
         /// <param name="categoryName">The category name.</param>
         /// <param name="imageUri">The path to the category's icon.</param>
-        internal PageButtonViewModel(EPageName pageName, string imageUri)
+        internal PageButtonViewModel(PageName pageName, string imageUri)
         {
             this._pageName = pageName;
             this._imageUri = imageUri;
@@ -36,7 +36,7 @@ namespace AOERandomizer.ViewModel
         /// <summary>
         /// Gets or sets the page name.
         /// </summary>
-        internal EPageName PageName
+        internal PageName PageName
         {
             get => this._pageName;
             set => this.SetProperty(ref this._pageName, value);

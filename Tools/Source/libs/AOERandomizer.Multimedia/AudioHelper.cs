@@ -17,30 +17,32 @@ namespace AOERandomizer.Multimedia
         #region Constants
 
         private const string LOG_CTX = "AOERandomizer.Multimedia.AudioHelper";
-
         private const string SfxFolder = @"Resources\Media\Sound\SFX\";
         private const string MusicFolder = @"Resources\Media\Sound\Music\";
-
         private const string MouseOverSoundPath = $"{SfxFolder}button_mouse_over.wav";
         private const string ButtonClickSoundPath = $"{SfxFolder}button_click.wav";
         private const string ButtonWololoSoundPath = $"{SfxFolder}wololo.wav";
+        private const string WheelBeepSoundPath = $"{SfxFolder}wheel_beep.wav";
+        private const string GolfClapSoundpath = $"{SfxFolder}golf_clap.wav";
 
         #endregion // Constants
 
         #region Members
 
-        private static readonly ILog? Log;
+        private static readonly ILog Log = FroggoApplication.ApplicationLog;
 
+        private static readonly List<string> Songs;
         private static readonly MediaPlayer ButtonMouseOverSound;
         private static readonly MediaPlayer ButtonClickSound;
         private static readonly MediaPlayer ButtonWololoSound;
+        private static readonly MediaPlayer WheelBeepSound;
+        private static readonly MediaPlayer GolfClapSound;
         private static readonly MediaPlayer BackgroundMusic;
-
         private static readonly Uri ButtonMouseOverUri;
         private static readonly Uri ButtonClickUri;
         private static readonly Uri ButtonWololoUri;
-
-        private static readonly List<string> Songs;
+        private static readonly Uri WheelBeepUri;
+        private static readonly Uri GolfClapUri;
 
         #endregion // Members
 
@@ -51,26 +53,38 @@ namespace AOERandomizer.Multimedia
         /// </summary>
         static AudioHelper()
         {
-            Log = FroggoApplication.ApplicationLog;
+            Songs = new();
 
             using (Log.ProfileCtx(LOG_CTX, "Initializing audio helper"))
             {
-                ButtonMouseOverUri = new Uri(Path.Combine(Environment.CurrentDirectory, MouseOverSoundPath), UriKind.Relative);
+                ButtonMouseOverUri = new(Path.Combine(Environment.CurrentDirectory, MouseOverSoundPath), UriKind.Relative);
                 ButtonMouseOverSound = new MediaPlayer
                 {
                     Volume = 0.1
                 };
 
-                ButtonClickUri = new Uri(Path.Combine(Environment.CurrentDirectory, ButtonClickSoundPath), UriKind.Relative);
+                ButtonClickUri = new(Path.Combine(Environment.CurrentDirectory, ButtonClickSoundPath), UriKind.Relative);
                 ButtonClickSound = new MediaPlayer
                 {
                     Volume = 0.1
                 };
 
-                ButtonWololoUri = new Uri(Path.Combine(Environment.CurrentDirectory, ButtonWololoSoundPath), UriKind.Relative);
+                ButtonWololoUri = new(Path.Combine(Environment.CurrentDirectory, ButtonWololoSoundPath), UriKind.Relative);
                 ButtonWololoSound = new MediaPlayer
                 {
                     Volume = 0.5
+                };
+
+                WheelBeepUri = new(Path.Combine(Environment.CurrentDirectory, WheelBeepSoundPath), UriKind.Relative);
+                WheelBeepSound = new MediaPlayer()
+                {
+                    Volume = 0.25
+                };
+
+                GolfClapUri = new(Path.Combine(Environment.CurrentDirectory, GolfClapSoundpath), UriKind.Relative);
+                GolfClapSound = new MediaPlayer()
+                {
+                    Volume = 0.3
                 };
 
                 BackgroundMusic = new MediaPlayer
@@ -81,13 +95,13 @@ namespace AOERandomizer.Multimedia
                 try
                 {
                     Songs = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, MusicFolder), "*.wav").ToList();
-                    BackgroundMusic.MediaEnded += new EventHandler(BackgroundMusic_MediaEnded);
+                    BackgroundMusic.MediaEnded += new(BackgroundMusic_MediaEnded);
 
                     // Pick a random song to play first...
                     if (Songs.Any())
                     {
                         string song = Songs[MasterRNG.GetRandomNumberFrom(0, Songs.Count - 1)];
-                        BackgroundMusic.Open(new Uri(song, UriKind.Relative));
+                        BackgroundMusic.Open(new(song, UriKind.Relative));
                         Songs.Remove(song);
                     }
                     else
@@ -119,7 +133,7 @@ namespace AOERandomizer.Multimedia
         /// </summary>
         public static void PlayButtonClickSound()
         {
-            if (MasterRNG.GetRandomNumberFrom(0, 1000) < 55)
+            if (MasterRNG.GetRandomNumberFrom(0, 100) <= 6)
             {
                 TryPlaySound(ButtonWololoSound, ButtonWololoUri);
             }
@@ -127,6 +141,22 @@ namespace AOERandomizer.Multimedia
             {
                 TryPlaySound(ButtonClickSound, ButtonClickUri);
             }
+        }
+
+        /// <summary>
+        /// Plays the wheel beep sound.
+        /// </summary>
+        public static void PlayWheelBeepSound()
+        {
+            TryPlaySound(WheelBeepSound, WheelBeepUri);
+        }
+
+        /// <summary>
+        /// Plays the golf clap sound.
+        /// </summary>
+        public static void PlayGolfClapSound()
+        {
+            TryPlaySound(GolfClapSound, GolfClapUri);
         }
 
         /// <summary>
@@ -182,7 +212,7 @@ namespace AOERandomizer.Multimedia
             }
 
             string song = Songs[MasterRNG.GetRandomNumberFrom(0, Songs.Count - 1)];
-            BackgroundMusic.Open(new Uri(song, UriKind.Relative));
+            BackgroundMusic.Open(new(song, UriKind.Relative));
             Songs.Remove(song);
 
             BackgroundMusic.Play();

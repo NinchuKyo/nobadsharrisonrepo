@@ -9,6 +9,9 @@ using System.Windows.Input;
 
 namespace AOERandomizer.ViewModel.Pages
 {
+    /// <summary>
+    /// Base viewmodel for a page.
+    /// </summary>
     public abstract class PageBaseViewModel : ViewModelBase
     {
         #region Constants
@@ -20,8 +23,7 @@ namespace AOERandomizer.ViewModel.Pages
         #region Members
 
         protected readonly NavigationViewModel _navVm;
-
-        protected readonly ILog? _log;
+        protected readonly ILog _log;
         protected readonly ObservableCollection<PageButtonViewModel> _pageButtons;
 
         #endregion // Members
@@ -46,12 +48,13 @@ namespace AOERandomizer.ViewModel.Pages
         internal PageBaseViewModel(AppConfig settingsConfig, NavigationViewModel navVm, DataConfig dataConfig)
         {
             this.SettingsConfig = settingsConfig;
-            this.DataConfig = dataConfig;
             this._navVm = navVm;
+            this.DataConfig = dataConfig;
+
             this._log = FroggoApplication.ApplicationLog;
+            this._pageButtons = new();
 
             this.NavigateCommand = new RelayCommand(CanExecuteNavigateCommand, ExecuteNavigateCommand);
-            this._pageButtons = new ObservableCollection<PageButtonViewModel>();
         }
 
         /// <summary>

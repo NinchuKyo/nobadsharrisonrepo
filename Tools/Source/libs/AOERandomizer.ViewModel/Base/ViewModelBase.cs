@@ -24,7 +24,7 @@ namespace AOERandomizer.ViewModel.Base
         /// <param name="propertyName">(optional) The name of the property to change.</param>
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new(propertyName));
         }
 
         /// <summary>

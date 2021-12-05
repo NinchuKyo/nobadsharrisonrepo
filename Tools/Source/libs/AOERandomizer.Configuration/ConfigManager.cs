@@ -14,7 +14,6 @@ namespace AOERandomizer.Configuration
         #region Constants
 
         private const string LOG_CTX = "AOERandomizer.Configuration.ConfigManager";
-
         private const string AppSettingsJsonPath = "appsettings.json";
         private const string AppDataJsonPath = "appdata.json";
 
@@ -22,21 +21,9 @@ namespace AOERandomizer.Configuration
 
         #region Members
 
-        private static readonly ILog? Log;
+        private static readonly ILog Log = FroggoApplication.ApplicationLog;
 
         #endregion // Members
-
-        #region Constructors
-
-        /// <summary>
-        /// Default static constructor.
-        /// </summary>
-        static ConfigManager()
-        {
-            Log = FroggoApplication.ApplicationLog;
-        }
-
-        #endregion // Constructors
 
         #region Methods
 
@@ -70,7 +57,7 @@ namespace AOERandomizer.Configuration
 
             try
             {
-                File.WriteAllText(AppDataJsonPath, JsonConvert.SerializeObject(toSave ?? new DataConfig(), Formatting.Indented));
+                File.WriteAllText(AppDataJsonPath, JsonConvert.SerializeObject(toSave ?? new(), Formatting.Indented));
             }
             catch (Exception ex)
             {
@@ -87,7 +74,7 @@ namespace AOERandomizer.Configuration
         public static AppConfig LoadSettingsConfig()
         {
             Log.InfoCtx(LOG_CTX, $"Loading application settings from '{AppSettingsJsonPath}'");
-            AppConfig? settings = null;
+            AppConfig? settings;
 
             try
             {
@@ -95,7 +82,7 @@ namespace AOERandomizer.Configuration
                 if (settings == null)
                 {
                     Log.WarningCtx(LOG_CTX, "Settings were loaded but not set - loading default settings");
-                    settings = new AppConfig();
+                    settings = new();
                 }
 
                 Log.InfoCtx(LOG_CTX, $"Application settings loaded");
@@ -103,7 +90,7 @@ namespace AOERandomizer.Configuration
             catch (Exception ex)
             {
                 Log.ExceptionCtx(LOG_CTX, $"Failed to load application settings from {AppSettingsJsonPath}', loading default settings", ex);
-                settings = new AppConfig();
+                settings = new();
             }
 
             return settings;
@@ -116,7 +103,7 @@ namespace AOERandomizer.Configuration
         public static DataConfig LoadDataConfig()
         {
             Log.InfoCtx(LOG_CTX, $"Loading application data from '{AppSettingsJsonPath}'");
-            DataConfig? settings = null;
+            DataConfig? settings;
 
             try
             {
@@ -124,7 +111,7 @@ namespace AOERandomizer.Configuration
                 if (settings == null)
                 {
                     Log.WarningCtx(LOG_CTX, "Data was loaded but not set - loading default data");
-                    settings = new DataConfig();
+                    settings = new();
                 }
 
                 Log.InfoCtx(LOG_CTX, $"Application data loaded");
@@ -132,7 +119,7 @@ namespace AOERandomizer.Configuration
             catch (Exception ex)
             {
                 Log.ExceptionCtx(LOG_CTX, $"Failed to load application data from {AppSettingsJsonPath}', loading default data", ex);
-                settings = new DataConfig();
+                settings = new();
             }
 
             return settings;

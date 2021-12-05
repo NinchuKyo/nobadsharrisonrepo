@@ -86,6 +86,9 @@ namespace AOERandomizer.ViewModel.Pages
             set { this.SetProperty(ref this._playerNameText, value); }
         }
 
+        /// <summary>
+        /// Gets the selected team configuration.
+        /// </summary>
         public string SelectedTeamConfig
         {
             get { return this.DataConfig.TeamsPageData.TeamLayout.GetDisplayName(); }
@@ -101,12 +104,12 @@ namespace AOERandomizer.ViewModel.Pages
             using (this._log.ProfileCtx(LOG_CTX, "Loading TeamsPageViewModel"))
             {
                 // Add home button
-                string iconPath = $"{ButtonIconsPath}/{EPageName.Home}.png";
-                this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
+                string iconPath = $"{ButtonIconsPath}/{PageName.Home}.png";
+                this._pageButtons.Add(new(PageName.Home, iconPath));
 
                 // Add civs button
-                iconPath = $"{ButtonIconsPath}/{EPageName.Civs}.png";
-                this._pageButtons.Add(new PageButtonViewModel(EPageName.Civs, iconPath));
+                iconPath = $"{ButtonIconsPath}/{PageName.Civs}.png";
+                this._pageButtons.Add(new(PageName.Civs, iconPath));
             }
         }
 
@@ -119,12 +122,12 @@ namespace AOERandomizer.ViewModel.Pages
 
                 switch (button.PageName)
                 {
-                    case EPageName.Home:
+                    case PageName.Home:
                         HomePageViewModel homePageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         homePageVm.Load();
                         this._navVm.SelectedVm = homePageVm;
                         break;
-                    case EPageName.Civs:
+                    case PageName.Civs:
                         CivsPageViewModel civsPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         civsPageVm.Load();
                         this._navVm.SelectedVm = civsPageVm;
@@ -204,11 +207,20 @@ namespace AOERandomizer.ViewModel.Pages
             }
         }
 
+        /// <summary>
+        /// Returns a flag indicating whether the selected team config changed command can be executed.
+        /// </summary>
+        /// <param name="obj">Command parameter.</param>
+        /// <returns>Flag indicating whether the selected team config changed command can execute.</returns>
         private bool CanExecuteSelectedTeamConfigChangedCommand(object? obj)
         {
             return !this._isSpinning;
         }
 
+        /// <summary>
+        /// Executes the selected team config changed command.
+        /// </summary>
+        /// <param name="obj">Command parameter.</param>
         private void ExecuteSelectedTeamConfigChangedCommand(object? obj)
         {
             if (!this._isSpinning)

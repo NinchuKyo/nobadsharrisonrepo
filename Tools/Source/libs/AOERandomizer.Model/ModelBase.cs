@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace AOERandomizer.Model
 {
+    /// <summary>
+    /// Base implementation of a model that raises property changed events.
+    /// </summary>
     public class ModelBase : INotifyPropertyChanged
     {
         #region Events
@@ -21,7 +24,7 @@ namespace AOERandomizer.Model
         /// <param name="propertyName">(optional) The name of the property to change.</param>
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new(propertyName));
         }
 
         /// <summary>

@@ -39,8 +39,8 @@ namespace AOERandomizer.ViewModel.Pages
             using (this._log.ProfileCtx(LOG_CTX, "Loading CoinFlipPageViewModel"))
             {
                 // Add home button
-                string iconPath = $"{ButtonIconsPath}/{EPageName.Home}.png";
-                this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
+                string iconPath = $"{ButtonIconsPath}/{PageName.Home}.png";
+                this._pageButtons.Add(new(PageName.Home, iconPath));
             }
         }
 
@@ -53,7 +53,7 @@ namespace AOERandomizer.ViewModel.Pages
 
                 switch (button.PageName)
                 {
-                    case EPageName.Home:
+                    case PageName.Home:
                         HomePageViewModel homePageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         homePageVm.Load();
                         this._navVm.SelectedVm = homePageVm;

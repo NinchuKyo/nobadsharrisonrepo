@@ -22,7 +22,7 @@ namespace AOERandomizer.View.Pages
 
             if (wheelDemo.IsLoaded)
             {
-                this.wheelDemo.Spin(100, 6);
+                this.wheelDemo.Spin(20, 30, 15, 20);
             }
         }
 
@@ -32,7 +32,7 @@ namespace AOERandomizer.View.Pages
 
             if (wheelDemo.IsLoaded)
             {
-                this.wheelDemo.Spin(100, 6);
+                this.wheelDemo.AutoSpin();
             }
         }
     }

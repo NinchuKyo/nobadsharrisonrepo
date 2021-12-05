@@ -39,13 +39,13 @@ namespace AOERandomizer.ViewModel.Pages
         {
             using (this._log.ProfileCtx(LOG_CTX, "Loading HomePageViewModel"))
             {
-                foreach (EPageName pageName in Enum.GetValues(typeof(EPageName)))
+                foreach (PageName pageName in Enum.GetValues(typeof(PageName)))
                 {
                     // Skip home button
-                    if (pageName != EPageName.Home)
+                    if (pageName != PageName.Home)
                     {
                         string iconPath = $"{ButtonIconsPath}/{pageName}.png";
-                        this._pageButtons.Add(new PageButtonViewModel(pageName, iconPath));
+                        this._pageButtons.Add(new(pageName, iconPath));
                     }
                 }
             }
@@ -60,22 +60,22 @@ namespace AOERandomizer.ViewModel.Pages
 
                 switch (button.PageName)
                     {
-                        case EPageName.Teams:
+                        case PageName.Teams:
                             TeamsPageViewModel teamPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                             teamPageVm.Load();
                             this._navVm.SelectedVm = teamPageVm;
                             break;
-                        case EPageName.Civs:
+                        case PageName.Civs:
                             CivsPageViewModel civsPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                             civsPageVm.Load();
                             this._navVm.SelectedVm = civsPageVm;
                             break;
-                        case EPageName.Maps:
+                        case PageName.Maps:
                             MapsPageViewModel mapsPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                             mapsPageVm.Load();
                             this._navVm.SelectedVm = mapsPageVm;
                             break;
-                        case EPageName.CoinFlip:
+                        case PageName.CoinFlip:
                             CoinFlipPageViewModel coinFlipPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                             coinFlipPageVm.Load();
                             this._navVm.SelectedVm = coinFlipPageVm;

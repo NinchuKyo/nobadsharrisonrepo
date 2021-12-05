@@ -13,7 +13,6 @@ namespace AOERandomizer.Logging
         #region Constants
 
         private const string LOG_CTX = "AOERandomizer.Logging.LogBase";
-
         private const string DateFormat = "yy/MM/dd hh:mm:ss tt";
         private const string TextExtension = ".txt";
 
@@ -54,15 +53,16 @@ namespace AOERandomizer.Logging
         /// <inheritdoc />
         public LogProfile ProfileCtx(string context, string message)
         {
-            return new LogProfile(this, context, message);
+            return new(this, context, message);
         }
 
         /// <inheritdoc />
         public void InfoCtx(string context, string message)
         {
             string timestamp = DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture);
-            this.WriteToConsole(timestamp, LogLevel.Info, ConsoleColor.Green, context, message);
-            this.WriteToStream(timestamp, "Info", context, message);
+
+            WriteToConsole(timestamp, LogLevel.Info, ConsoleColor.Green, context, message);
+            WriteToStream(this._textWriter, timestamp, "Info", context, message);
         }
 
         /// <inheritdoc />
@@ -70,8 +70,9 @@ namespace AOERandomizer.Logging
         {
 #if DEBUG
             string timestamp = DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture);
-            this.WriteToConsole(timestamp, LogLevel.Debug, ConsoleColor.Magenta, context, message);
-            this.WriteToStream(timestamp, "Debug", context, message);
+
+            WriteToConsole(timestamp, LogLevel.Debug, ConsoleColor.Magenta, context, message);
+            WriteToStream(this._textWriter, timestamp, "Debug", context, message);
 #endif
         }
 
@@ -79,24 +80,27 @@ namespace AOERandomizer.Logging
         public void ProfileMsg(string context, string message)
         {
             string timestamp = DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture);
-            this.WriteToConsole(timestamp, LogLevel.Profile, ConsoleColor.Cyan, context, message);
-            this.WriteToStream(timestamp, "Prof", context, message);
+
+            WriteToConsole(timestamp, LogLevel.Profile, ConsoleColor.Cyan, context, message);
+            WriteToStream(this._textWriter, timestamp, "Prof", context, message);
         }
 
         /// <inheritdoc />
         public void WarningCtx(string context, string message)
         {
             string timestamp = DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture);
-            this.WriteToConsole(timestamp, LogLevel.Warning, ConsoleColor.Yellow, context, message);
-            this.WriteToStream(timestamp, "Warn", context, message);
+
+            WriteToConsole(timestamp, LogLevel.Warning, ConsoleColor.Yellow, context, message);
+            WriteToStream(this._textWriter, timestamp, "Warn", context, message);
         }
 
         /// <inheritdoc />
         public void ErrorCtx(string context, string message)
         {
             string timestamp = DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture);
-            this.WriteToConsole(timestamp, LogLevel.Error, ConsoleColor.Red, context, message);
-            this.WriteToStream(timestamp, "Error", context, message);
+
+            WriteToConsole(timestamp, LogLevel.Error, ConsoleColor.Red, context, message);
+            WriteToStream(this._textWriter, timestamp, "Error", context, message);
         }
 
         /// <inheritdoc />
@@ -104,8 +108,9 @@ namespace AOERandomizer.Logging
         {
             string timestamp = DateTime.Now.ToString(DateFormat, CultureInfo.InvariantCulture);
             string exceptionMsg = $"{message}{Environment.NewLine}{Environment.NewLine}{ex}{Environment.NewLine}";
-            this.WriteToConsole(timestamp, LogLevel.Exception, ConsoleColor.DarkRed, context, exceptionMsg);
-            this.WriteToStream(timestamp, "Exception", context, exceptionMsg);
+
+            WriteToConsole(timestamp, LogLevel.Exception, ConsoleColor.DarkRed, context, exceptionMsg);
+            WriteToStream(this._textWriter, timestamp, "Exception", context, exceptionMsg);
         }
 
         /// <summary>
@@ -116,7 +121,7 @@ namespace AOERandomizer.Logging
         /// <param name="colour">The console text colour for the log level.</param>
         /// <param name="context">The log context.</param>
         /// <param name="message">The log message.</param>
-        private void WriteToConsole(string timestamp, LogLevel level, ConsoleColor colour, string context, string message)
+        private static void WriteToConsole(string timestamp, LogLevel level, ConsoleColor colour, string context, string message)
         {
             Console.Write($"{timestamp} [");
 
@@ -164,13 +169,14 @@ namespace AOERandomizer.Logging
         /// <summary>
         /// Writes the given log message to the given stream.
         /// </summary>
+        /// <param name="textWriter">The stream to write to.</param>
         /// <param name="timestamp">The timestamp.</param>
         /// <param name="logLevel">The log level.</param>
         /// <param name="context">The log context.</param>
         /// <param name="message">The log message.</param>
-        private void WriteToStream(string timestamp, string logLevel, string context, string message)
+        private static void WriteToStream(StreamWriter textWriter, string timestamp, string logLevel, string context, string message)
         {
-            this._textWriter.WriteLine($"{timestamp} [{logLevel}]: Ctx: {context} - {message}");
+            textWriter.WriteLine($"{timestamp} [{logLevel}]: Ctx: {context} - {message}");
         }
 
         /// <inheritdoc />

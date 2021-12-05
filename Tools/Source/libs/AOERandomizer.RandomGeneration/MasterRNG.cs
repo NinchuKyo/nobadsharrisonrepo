@@ -19,9 +19,11 @@ namespace AOERandomizer.RandomGeneration
 
         #region Members
 
-        private static readonly ILog? Log = FroggoApplication.ApplicationLog;
+        private static readonly ILog Log = FroggoApplication.ApplicationLog;
 
         #endregion // Members
+
+        #region Methods
 
         /// <summary>
         /// Restricted to positive integers.
@@ -38,12 +40,39 @@ namespace AOERandomizer.RandomGeneration
             {
                 result = RandomNumberGenerator.GetInt32(0, Int32.MaxValue);
             }
-
-            result = RandomNumberGenerator.GetInt32(fromInclusive, toInclusive + 1);
+            else
+            {
+                result = RandomNumberGenerator.GetInt32(fromInclusive, toInclusive + 1);
+            }
 
             Log.DebugCtx(LOG_CTX, $"Generated random number between {fromInclusive} and {toInclusive} = {result}");
 
             return result;
         }
+
+        /// <summary>
+        /// Gets a random double between 0 (inclusive) and 1 (exclusive).
+        /// </summary>
+        /// <returns>Random doble between [0, 1).</returns>
+        public static double GetRandomDouble()
+        {
+            return GetRandomDoubleFromZeroTo();
+        }
+
+        /// <summary>
+        /// Gets a random double between 0 (inclusive) and the given maximum (exclusive).
+        /// </summary>
+        /// <param name="exclusive">The max (exclusive).</param>
+        /// <returns>Random double between [0, exclusive).</returns>
+        public static double GetRandomDoubleFromZeroTo(double exclusive = 1)
+        {
+            byte[] bytes = RandomNumberGenerator.GetBytes(8);
+            ulong shifted = BitConverter.ToUInt64(bytes, 0) >> 11;
+            double val = shifted / (double)(1UL << 53);
+
+            return val * exclusive;
+        }
+
+        #endregion // Methods
     }
 }

@@ -10,12 +10,6 @@ namespace FroggoBase
     /// </summary>
     public class FroggoApplication : Application
     {
-        #region Constants
-
-        private static readonly string LogPath = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "Logs");
-
-        #endregion // Constants
-
         #region Constructors
 
         /// <summary>
@@ -23,11 +17,25 @@ namespace FroggoBase
         /// </summary>
         static FroggoApplication()
         {
+            string? processPath = Environment.ProcessPath;
+            if (processPath == null)
+            {
+                throw new ApplicationException("Environment cannot determine process path (this should never happen).");
+            }
+
+            string? processDirectory = Path.GetDirectoryName(processPath);
+            if (processDirectory == null)
+            {
+                throw new ApplicationException("Cannot determine process directory (this should never happen).");
+            }
+
+            string logPath = Path.Combine(processDirectory, "Logs");
+
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-");
             string app = typeof(FroggoApplication).Name;
             string filename = $"{timestamp}_{app}";
 
-            ApplicationLog = LogFactory.CreateLog(Path.Combine(LogPath, filename));
+            ApplicationLog = LogFactory.CreateLog(Path.Combine(logPath, filename));
         }
 
         #endregion // Constructors
@@ -37,7 +45,7 @@ namespace FroggoBase
         /// <summary>
         /// Gets the application log.
         /// </summary>
-        public static ILog? ApplicationLog { get; }
+        public static ILog ApplicationLog { get; }
 
         #endregion // Properties
     }

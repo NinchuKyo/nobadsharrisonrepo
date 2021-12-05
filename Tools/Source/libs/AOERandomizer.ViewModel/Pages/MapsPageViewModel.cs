@@ -39,12 +39,12 @@ namespace AOERandomizer.ViewModel.Pages
             using (this._log.ProfileCtx(LOG_CTX, "Loading MapsPageViewModel"))
             {
                 // Add civs button
-                string iconPath = $"{ButtonIconsPath}/{EPageName.Civs}.png";
-                this._pageButtons.Add(new PageButtonViewModel(EPageName.Civs, iconPath));
+                string iconPath = $"{ButtonIconsPath}/{PageName.Civs}.png";
+                this._pageButtons.Add(new(PageName.Civs, iconPath));
 
                 // Add home button
-                iconPath = $"{ButtonIconsPath}/{EPageName.Home}.png";
-                this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
+                iconPath = $"{ButtonIconsPath}/{PageName.Home}.png";
+                this._pageButtons.Add(new(PageName.Home, iconPath));
 
                 // TODO: Add summary button
             }
@@ -59,12 +59,12 @@ namespace AOERandomizer.ViewModel.Pages
 
                 switch (button.PageName)
                 {
-                    case EPageName.Civs:
+                    case PageName.Civs:
                         CivsPageViewModel civsPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         civsPageVm.Load();
                         this._navVm.SelectedVm = civsPageVm;
                         break;
-                    case EPageName.Home:
+                    case PageName.Home:
                         HomePageViewModel homePageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         homePageVm.Load();
                         this._navVm.SelectedVm = homePageVm;

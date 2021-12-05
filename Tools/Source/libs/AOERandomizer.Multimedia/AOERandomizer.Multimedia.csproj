@@ -41,6 +41,12 @@
     <Content Include="Resources\Media\Sound\SFX\button_mouse_over.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Media\Sound\SFX\golf_clap.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Media\Sound\SFX\wheel_beep.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Media\Sound\SFX\wololo.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -90,6 +96,7 @@
     <Resource Include="Resources\Images\ScrollBar\Thumb_Icon_MouseOver.png" />
     <Resource Include="Resources\Images\ScrollBar\Up_Arrow_Default.png" />
     <Resource Include="Resources\Images\ScrollBar\Up_Arrow_MouseOver.png" />
+    <Resource Include="Resources\Images\wheel_arrow.png" />
   </ItemGroup>
 
 </Project>

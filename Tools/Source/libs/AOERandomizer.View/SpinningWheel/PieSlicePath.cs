@@ -6,6 +6,9 @@ using System.Windows.Shapes;
 
 namespace AOERandomizer.View.SpinningWheel
 {
+    /// <summary>
+    /// Defines the geometry used to draw a sigle pie slice (made up of two lines and an arc).
+    /// </summary>
     public class PieSlicePath : Shape
     {
         #region Members
@@ -32,17 +35,44 @@ namespace AOERandomizer.View.SpinningWheel
 
         #region Dependency Properties
 
+        /// <summary>
+        /// Start angle dependency property.
+        /// </summary>
         public static readonly DependencyProperty StartAngleProperty =
             DependencyProperty.Register("StartAngle", typeof(double), typeof(PieSlicePath),
-                new PropertyMetadata(default(double), (s, e) => { PieSlicePath_DependencyPropertyChanged(s as PieSlicePath); }));
+                new(default(double), (s, e) =>
+                {
+                    if (s is PieSlicePath p)
+                    {
+                        PieSlicePath_DependencyPropertyChanged(p);
+                    }
+                }));
 
+        /// <summary>
+        /// Angle dependency property.
+        /// </summary>
         public static readonly DependencyProperty AngleProperty =
             DependencyProperty.Register("Angle", typeof(double), typeof(PieSlicePath),
-                new PropertyMetadata(default(double), (s, e) => { PieSlicePath_DependencyPropertyChanged(s as PieSlicePath); }));
+                new(default(double), (s, e) =>
+                {
+                    if (s is PieSlicePath p)
+                    {
+                        PieSlicePath_DependencyPropertyChanged(p);
+                    }
+                }));
 
+        /// <summary>
+        /// Radius dependency property.
+        /// </summary>
         public static readonly DependencyProperty RadiusProperty =
             DependencyProperty.Register("Radius", typeof(double), typeof(PieSlicePath),
-                new PropertyMetadata(default(double), (s, e) => { PieSlicePath_DependencyPropertyChanged(s as PieSlicePath); }));
+                new(default(double), (s, e) =>
+                {
+                    if (s is PieSlicePath p)
+                    {
+                        PieSlicePath_DependencyPropertyChanged(p);
+                    }
+                }));
 
         #endregion // Dependency Properties
 
@@ -127,20 +157,20 @@ namespace AOERandomizer.View.SpinningWheel
 
             PathFigure figure = new()
             {
-                StartPoint = new Point(this.Radius, this.Radius),
+                StartPoint = new(this.Radius, this.Radius),
                 IsClosed = true
             };
 
             LineSegment line = new()
             {
-                Point = new Point(lineX, lineY)
+                Point = new(lineX, lineY)
             };
 
             ArcSegment arc = new()
             {
                 IsLargeArc = this.Angle >= 180.0,
-                Point = new Point(arcX, arcY),
-                Size = new Size(this.Radius, this.Radius),
+                Point = new(arcX, arcY),
+                Size = new(this.Radius, this.Radius),
                 SweepDirection = SweepDirection.Clockwise
             };
 

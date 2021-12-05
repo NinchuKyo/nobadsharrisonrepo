@@ -15,23 +15,26 @@ namespace AOERandomizer
         #region Constants
 
         private const string LOG_CTX = "AOERandomizerApp.AOERandomizerApp";
-
         private const string LoadingMsg = "Loading...";
 
         #endregion // Constants
 
         #region Members
 
-        private AppConfig? _appSettingsConfig;
-        private DataConfig? _appDataConfig;
+        private AppConfig _appSettingsConfig;
+        private DataConfig _appDataConfig;
 
         #endregion // Members
 
         #region Constructors
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public AOERandomizerApp()
         {
-            this.Exit += AOERandomizerApp_Exit;
+            this._appSettingsConfig = new();
+            this._appDataConfig = new();
         }
 
         #endregion // Constructors
@@ -99,17 +102,8 @@ namespace AOERandomizer
             });
         }
 
-        /// <summary>
-        /// Triggered when the application experiences an exception that remains unhandled.
-        /// </summary>
-        /// <param name="sender">The object that fired the event.</param>
-        /// <param name="e">The event arguments.</param>
-        private void AOERandomizerApp_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            ApplicationLog.ExceptionCtx(LOG_CTX, "Unhandled exception occurred in the application", e.Exception);
-        }
-
-        private void AOERandomizerApp_Exit(object sender, ExitEventArgs e)
+        /// <inheritdoc />
+        protected override void OnExit(ExitEventArgs e)
         {
             using (ApplicationLog.ProfileCtx(LOG_CTX, "Saving settings and data configurations before shutting down"))
             {
@@ -126,6 +120,18 @@ namespace AOERandomizer
 
             // Dispose (flush) the log...
             ApplicationLog.Dispose();
+
+            base.OnExit(e);
+        }
+
+        /// <summary>
+        /// Triggered when the application experiences an exception that remains unhandled.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void AOERandomizerApp_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            ApplicationLog.ExceptionCtx(LOG_CTX, "Unhandled exception occurred in the application", e.Exception);
         }
 
         #endregion // Methods

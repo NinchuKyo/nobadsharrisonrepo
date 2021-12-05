@@ -22,6 +22,8 @@
                                 StartAngle="{Binding ElementName=pieSliceControl, Path=StartAngle, UpdateSourceTrigger=PropertyChanged}"
                                 Angle="{Binding ElementName=pieSliceControl, Path=Angle, UpdateSourceTrigger=PropertyChanged}"
                                 Fill="{Binding ElementName=pieSliceControl, Path=PieSlicePathFill, UpdateSourceTrigger=PropertyChanged}"
+                                Stroke="Black"
+                                StrokeThickness="2"
                                 Canvas.ZIndex="1" />
         <TextBlock Canvas.ZIndex="2"
                    TextWrapping="Wrap"

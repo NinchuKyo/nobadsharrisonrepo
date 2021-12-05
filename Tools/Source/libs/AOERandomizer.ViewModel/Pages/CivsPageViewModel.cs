@@ -39,16 +39,16 @@ namespace AOERandomizer.ViewModel.Pages
             using (this._log.ProfileCtx(LOG_CTX, "Loading CivsPageViewModel"))
             {
                 // Add teams button
-                string iconPath = $"{ButtonIconsPath}/{EPageName.Teams}.png";
-                this._pageButtons.Add(new PageButtonViewModel(EPageName.Teams, iconPath));
+                string iconPath = $"{ButtonIconsPath}/{PageName.Teams}.png";
+                this._pageButtons.Add(new(PageName.Teams, iconPath));
 
                 // Add home button
-                iconPath = $"{ButtonIconsPath}/{EPageName.Home}.png";
-                this._pageButtons.Add(new PageButtonViewModel(EPageName.Home, iconPath));
+                iconPath = $"{ButtonIconsPath}/{PageName.Home}.png";
+                this._pageButtons.Add(new(PageName.Home, iconPath));
 
                 // Add maps button
-                iconPath = $"{ButtonIconsPath}/{EPageName.Maps}.png";
-                this._pageButtons.Add(new PageButtonViewModel(EPageName.Maps, iconPath));
+                iconPath = $"{ButtonIconsPath}/{PageName.Maps}.png";
+                this._pageButtons.Add(new(PageName.Maps, iconPath));
             }
         }
 
@@ -61,17 +61,17 @@ namespace AOERandomizer.ViewModel.Pages
 
                 switch (button.PageName)
                 {
-                    case EPageName.Teams:
+                    case PageName.Teams:
                         TeamsPageViewModel teamPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         teamPageVm.Load();
                         this._navVm.SelectedVm = teamPageVm;
                         break;
-                    case EPageName.Home:
+                    case PageName.Home:
                         HomePageViewModel homePageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         homePageVm.Load();
                         this._navVm.SelectedVm = homePageVm;
                         break;
-                    case EPageName.Maps:
+                    case PageName.Maps:
                         MapsPageViewModel mapsPageVm = new(this.SettingsConfig, this._navVm, this.DataConfig);
                         mapsPageVm.Load();
                         this._navVm.SelectedVm = mapsPageVm;

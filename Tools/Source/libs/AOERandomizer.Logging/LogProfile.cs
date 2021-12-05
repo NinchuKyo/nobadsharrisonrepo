@@ -14,7 +14,6 @@ namespace AOERandomizer.Logging
         private readonly ILog _log;
         private readonly string _context;
         private readonly string _message;
-
         private readonly Stopwatch _stopwatch;
 
         #endregion // Members
@@ -45,8 +44,11 @@ namespace AOERandomizer.Logging
         public void Dispose()
         {
             this._stopwatch.Stop();
+
             string timeString = GetTimeString(this._stopwatch.Elapsed);
             this._log.ProfileMsg(this._context, $"'{this._message}' took {timeString}");
+
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -71,12 +73,12 @@ namespace AOERandomizer.Logging
             if (timespan.Seconds > 0)
             {
                 double time = (double)timespan.Seconds + ((double)timespan.Milliseconds / 1000.0);
-                builder.Append($"{time.ToString("0.##")} s ");
+                builder.Append($"{time:0.##} s ");
             }
 
             if (builder.Length == 0)
             {
-                builder.Append($"{timespan.TotalMilliseconds.ToString("0.##")} ms ");
+                builder.Append($"{timespan.TotalMilliseconds:0.##} ms ");
             }
 
             return builder.ToString().Trim();

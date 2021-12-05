@@ -5,20 +5,41 @@ using System.Windows.Markup;
 
 namespace AOERandomizer.View.Converters
 {
+    /// <summary>
+    /// Enum binding source extension.
+    /// </summary>
     public class EnumBindingSourceExtension : MarkupExtension
     {
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="enumType">Enum for binding.</param>
         public EnumBindingSourceExtension(Type enumType)
         {
             if (enumType == null || !enumType.IsEnum)
             {
-                throw new Exception("'enumType' must be a non-null Enum type.");
+                throw new("'enumType' must be a non-null Enum type.");
             }
 
-            EnumType = enumType;
+            this.EnumType = enumType;
         }
 
+        #endregion // Constructors
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the enum type.
+        /// </summary>
         public Type EnumType { get; private set; }
 
+        #endregion // Properties
+
+        #region Methods
+
+        /// <inheritdoc />
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             List<string> values = new();
@@ -30,5 +51,7 @@ namespace AOERandomizer.View.Converters
 
             return values.ToArray();
         }
+
+        #endregion // Methods
     }
 }

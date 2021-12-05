@@ -9,6 +9,11 @@ namespace AOERandomizer.View.SpinningWheel.Helpers
     /// </summary>
     public static class QuadrantHelper
     {
+        /// <summary>
+        /// Gets the quadrant the given angle is in.
+        /// </summary>
+        /// <param name="angle">The angle.</param>
+        /// <returns>The quadrant containing the angle.</returns>
         public static Quadrants GetQuadrant(double angle)
         {
             if (angle <= 90.0)
@@ -29,6 +34,14 @@ namespace AOERandomizer.View.SpinningWheel.Helpers
             }
         }
 
+        /// <summary>
+        /// Returns a point within the given slice dimensions to place text.
+        /// </summary>
+        /// <param name="radius">The radius of the wheel the text will be in.</param>
+        /// <param name="startAngle">The start angle of the wheel's slice.</param>
+        /// <param name="angle">The angle of the wheel's slice.</param>
+        /// <returns>The point to place centered text.</returns>
+        /// <exception cref="NotSupportedException">Should never throw (unless a 5th quadrant is invented).</exception>
         public static Point Calculate(double radius, double startAngle, double angle)
         {
             double halfAngle = startAngle + angle / 2.0;
@@ -40,30 +53,12 @@ namespace AOERandomizer.View.SpinningWheel.Helpers
 
             return quadrant switch
             {
-                Quadrants.NE => new Point(opposite, -1.0 * adjacent),
-                Quadrants.SE => new Point(adjacent, opposite),
-                Quadrants.SW => new Point(-1.0 * opposite, adjacent),
-                Quadrants.NW => new Point(-1.0 * adjacent, -1.0 * opposite),
+                Quadrants.NE => new(opposite, -1.0 * adjacent),
+                Quadrants.SE => new(adjacent, opposite),
+                Quadrants.SW => new(-1.0 * opposite, adjacent),
+                Quadrants.NW => new(-1.0 * adjacent, -1.0 * opposite),
                 _ => throw new NotSupportedException(),
             };
-        }
-
-        public static double GetAngle(Point touchPoint, Size circleSize)
-        {
-            double x = touchPoint.X - (circleSize.Width / 2.0);
-            double y = circleSize.Height - touchPoint.Y - (circleSize.Height / 2.0);
-
-            double hypot = Math.Sqrt(x * x + y * y);
-            double value = Math.Asin(y / hypot) * 180.0 / Math.PI;
-
-            if (x >= 0.0)
-            {
-                return 90.0 - value;
-            }
-            else
-            {
-                return 270.0 + value;
-            }
         }
     }
 }

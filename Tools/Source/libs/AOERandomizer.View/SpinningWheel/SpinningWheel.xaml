@@ -17,14 +17,11 @@
         </Storyboard>
     </UserControl.Resources>
     
-    <StackPanel x:Name="layoutRoot"
-                IsManipulationEnabled="True"
-                ManipulationDelta="LayoutRoot_ManipulationDelta"
-                ManipulationCompleted="LayoutRoot_ManipulationCompleted">
+    <StackPanel x:Name="layoutRoot">
         <Grid x:Name="layoutSpinner">
             <Grid.RenderTransform>
                 <RotateTransform x:Name="gridRotateTransform"
-                                 Angle="{Binding ElementName=spinningWheelControl, Path=Angle}" />
+                                 Angle="{Binding ElementName=spinningWheelControl, Mode=TwoWay, Path=Angle}" />
             </Grid.RenderTransform>
         </Grid>
     </StackPanel>

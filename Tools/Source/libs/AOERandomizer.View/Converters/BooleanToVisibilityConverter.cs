@@ -11,7 +11,6 @@ namespace AOERandomizer.View.Converters
         /// Default constructor.
         /// </summary>
         public BooleanToVisibilityConverter() :
-            base(Visibility.Visible, Visibility.Collapsed)
-        { }
+            base(Visibility.Visible, Visibility.Collapsed) { }
     }
 }

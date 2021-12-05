@@ -29,7 +29,7 @@ namespace AOERandomizer.ViewModel.Windows
         private readonly AppConfig _settingsConfig;
         private readonly DataConfig _dataConfig;
 
-        private readonly ILog? _log;
+        private readonly ILog _log;
 
         private readonly NavigationViewModel _navManager;
         private readonly HomePageViewModel _homePageVm;
@@ -48,16 +48,16 @@ namespace AOERandomizer.ViewModel.Windows
         /// <param name="dataConfig">Data configuration.</param>
         public MainWindowViewModel(SplashScreenWindowViewModel splashScreenVm, AppConfig settingsConfig, DataConfig dataConfig)
         {
-            this._random = new Random(MasterRNG.GetRandomNumberFrom(0, Int32.MaxValue - 1));
-
             this._splashScreenVm = splashScreenVm;
             this._settingsConfig = settingsConfig;
             this._dataConfig = dataConfig;
 
             this._log = FroggoApplication.ApplicationLog;
 
-            this._navManager = new NavigationViewModel();
-            this._homePageVm = new HomePageViewModel(settingsConfig, this._navManager, dataConfig);
+            this._navManager = new();
+            this._homePageVm = new(settingsConfig, this._navManager, dataConfig);
+
+            this._random = new(MasterRNG.GetRandomNumberFrom(0, Int32.MaxValue - 1));
 
             this._navManager.PropertyChanged += this.NavManager_PropertyChanged;
             this._navManager.SelectedVm = this._homePageVm;
