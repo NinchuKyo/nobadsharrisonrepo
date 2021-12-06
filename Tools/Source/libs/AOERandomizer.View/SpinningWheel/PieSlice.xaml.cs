@@ -1,7 +1,9 @@
 ﻿using AOERandomizer.View.SpinningWheel.Base;
 using AOERandomizer.View.SpinningWheel.Helpers;
+using System;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace AOERandomizer.View.SpinningWheel
 {
@@ -10,13 +12,23 @@ namespace AOERandomizer.View.SpinningWheel
     /// </summary>
     public sealed partial class PieSlice : NotifyPropertyChangedUserControl
     {
+        #region Constants
+
+        protected const string FaceIconsPath = $"pack://application:,,,/AOERandomizer.Multimedia;component/Resources/Images/Faces";
+
+        #endregion // Constants
+
         #region Members
 
-        private SolidColorBrush _pieSlicePathFill;
-        private SolidColorBrush _textBlockForeground;
+        private Brush _pieSlicePathFill;
+        private Brush _textBlockForeground;
         private double _textBlockRotateAngle;
         private double _textBlockTranslateX;
         private double _textBlockTranslateY;
+
+        private double _faceImageRotateAngle;
+        private double _faceImageTranslateX;
+        private double _faceImageTranslateY;
 
         #endregion // Members
 
@@ -27,8 +39,8 @@ namespace AOERandomizer.View.SpinningWheel
         /// </summary>
         public PieSlice()
         {
-            this._pieSlicePathFill = new(Colors.Transparent);
-            this._textBlockForeground = new(Colors.Transparent);
+            this._pieSlicePathFill = new SolidColorBrush(Colors.Transparent);
+            this._textBlockForeground = new SolidColorBrush(Colors.Transparent);
 
             this.InitializeComponent();
         }
@@ -149,7 +161,7 @@ namespace AOERandomizer.View.SpinningWheel
         /// <summary>
         /// Gets or sets the fill brush for this pie slice (associated with background colour).
         /// </summary>
-        public SolidColorBrush PieSlicePathFill
+        public Brush PieSlicePathFill
         {
             get { return this._pieSlicePathFill; }
             set { this.SetProperty(ref this._pieSlicePathFill, value); }
@@ -158,7 +170,7 @@ namespace AOERandomizer.View.SpinningWheel
         /// <summary>
         /// Gets or sets the colour brush for this pie slice's label (associated with foreground colour).
         /// </summary>
-        public SolidColorBrush TextBlockForeground
+        public Brush TextBlockForeground
         {
             get { return this._textBlockForeground; }
             set { this.SetProperty(ref this._textBlockForeground, value); }
@@ -191,6 +203,54 @@ namespace AOERandomizer.View.SpinningWheel
             set { this.SetProperty(ref this._textBlockTranslateY, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the text block rotate angle.
+        /// </summary>
+        public double FaceImageRotateAngle
+        {
+            get { return this._faceImageRotateAngle; }
+            set { this.SetProperty(ref this._faceImageRotateAngle, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the text block translate X value.
+        /// </summary>
+        public double FaceImageTranslateX
+        {
+            get { return this._faceImageTranslateX; }
+            set { this.SetProperty(ref this._faceImageTranslateX, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the text block translate Y value.
+        /// </summary>
+        public double FaceImageTranslateY
+        {
+            get { return this._faceImageTranslateY; }
+            set { this.SetProperty(ref this._faceImageTranslateY, value); }
+        }
+
+        private ImageSource _faceImage;
+        public ImageSource FaceImage
+        {
+            get { return this._faceImage; }
+            set { this.SetProperty(ref this._faceImage, value); }
+        }
+
+        private double _faceWidth;
+        public double FaceWidth
+        {
+            get { return this._faceWidth; }
+            set { this.SetProperty(ref this._faceWidth, value); }
+        }
+
+        private double _faceHeight;
+        public double FaceHeight
+        {
+            get { return this._faceHeight; }
+            set { this.SetProperty(ref this._faceHeight, value); }
+        }
+
         #endregion // Properties
 
         #region Methods
@@ -202,13 +262,88 @@ namespace AOERandomizer.View.SpinningWheel
         /// <param name="routedEventArgs">Event arguments.</param>
         private void PieSliceControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.PieSlicePathFill = new(this.BackgroundColor);
-            this.TextBlockForeground = new(this.ForegroundColor);
-            this.TextBlockRotateAngle = this.StartAngle + this.Angle / 2.0;
+            double halfAngle = this.StartAngle + (this.Angle / 2.0);
 
-            Point newPoint = QuadrantHelper.Calculate(4.0 * this.Radius / 5.0, this.StartAngle, this.Angle);
-            this.TextBlockTranslateX = newPoint.X;
-            this.TextBlockTranslateY = newPoint.Y;
+            this.TextBlockForeground = new SolidColorBrush(this.ForegroundColor);
+            this.TextBlockRotateAngle = halfAngle;
+            this.FaceImageRotateAngle = halfAngle;
+
+            Point textboxPoint = QuadrantHelper.Calculate(0.9 * this.Radius, halfAngle);
+            this.TextBlockTranslateX = textboxPoint.X;
+            this.TextBlockTranslateY = textboxPoint.Y;
+
+            Point imgPoint = QuadrantHelper.Calculate(0.65 * this.Radius, halfAngle);
+            this.FaceImageTranslateX = imgPoint.X;
+            this.FaceImageTranslateY = imgPoint.Y;
+
+            string faceIcon = $"{FaceIconsPath}/{this.Label}_face.png";
+            BitmapImage faceImg = new BitmapImage(new Uri(faceIcon));
+            this.FaceImage = faceImg;
+
+            this.FaceHeight = 60.0;
+            this.FaceWidth = 60.0;
+
+            //string label = this.Label;
+            string label = String.Empty;
+            if (!String.IsNullOrWhiteSpace(label))
+            {
+                TransformGroup tGroup = new();
+
+                try
+                {
+                    string iconPath = $"{FaceIconsPath}/{label}_face.png";
+                    BitmapImage img = new BitmapImage(new Uri(iconPath));
+
+                    RotateTransform rTrans = new()
+                    {
+                        CenterX = 0.5,
+                        CenterY = 0.5,
+                        Angle = halfAngle
+                    };
+
+                    TranslateTransform tTrans = new()
+                    {
+                        X = imgPoint.X - 24,
+                        Y = imgPoint.Y + 15
+                    };
+
+                    tGroup.Children.Add(rTrans);
+                    //tGroup.Children.Add(tTrans);
+
+                    this.PieSlicePathFill = new ImageBrush(img)
+                    {
+                        Stretch = Stretch.Uniform,
+                        RelativeTransform = tGroup
+                    };
+                }
+                catch (Exception)
+                {
+                    string iconPath = $"{FaceIconsPath}/unknown_face.png";
+                    BitmapImage img = new(new(iconPath));
+
+                    RotateTransform rTrans = new()
+                    {
+                        CenterX = 0.5,
+                        CenterY = 0.5,
+                        Angle = halfAngle
+                    };
+
+                    TranslateTransform tTrans = new()
+                    {
+                        X = imgPoint.X,
+                        Y = imgPoint.Y
+                    };
+
+                    tGroup.Children.Add(rTrans);
+                    tGroup.Children.Add(tTrans);
+
+                    this.PieSlicePathFill = new ImageBrush(img) { Stretch = Stretch.UniformToFill, Transform = tGroup };
+                }
+            }
+            else
+            {
+                this.PieSlicePathFill = new SolidColorBrush(this.BackgroundColor);
+            }
         }
 
         #endregion // Methods

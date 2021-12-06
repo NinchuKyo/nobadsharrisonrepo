@@ -1,2 +1,15 @@
 {
+  "TeamsPageData": {
+    "Players": [
+      "Mark",
+      "Harry",
+      "Joey",
+      "Nolan",
+      "Jamaal",
+      "David",
+      "AI_1",
+      "AI_2"
+    ],
+    "TeamLayout": "TwoVsTwo"
+  }
 }

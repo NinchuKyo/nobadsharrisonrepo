@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AOERandomizer.View.SpinningWheel.Helpers;
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace AOERandomizer.View.SpinningWheel
@@ -11,6 +13,8 @@ namespace AOERandomizer.View.SpinningWheel
     /// </summary>
     public class PieSlicePath : Shape
     {
+        protected const string FaceIconsPath = $"pack://application:,,,/AOERandomizer.Multimedia;component/Resources/Images/Faces";
+
         #region Members
 
         private bool _isLoaded;

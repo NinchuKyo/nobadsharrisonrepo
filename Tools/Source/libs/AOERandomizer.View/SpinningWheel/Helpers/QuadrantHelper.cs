@@ -38,13 +38,11 @@ namespace AOERandomizer.View.SpinningWheel.Helpers
         /// Returns a point within the given slice dimensions to place text.
         /// </summary>
         /// <param name="radius">The radius of the wheel the text will be in.</param>
-        /// <param name="startAngle">The start angle of the wheel's slice.</param>
-        /// <param name="angle">The angle of the wheel's slice.</param>
+        /// <param name="halfAngle">The half-angle of the pie slice.</param>
         /// <returns>The point to place centered text.</returns>
         /// <exception cref="NotSupportedException">Should never throw (unless a 5th quadrant is invented).</exception>
-        public static Point Calculate(double radius, double startAngle, double angle)
+        public static Point Calculate(double radius, double halfAngle)
         {
-            double halfAngle = startAngle + angle / 2.0;
             Quadrants quadrant = GetQuadrant(halfAngle);
             double quadrantAngle = halfAngle - 90.0 * (int)quadrant;
 

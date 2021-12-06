@@ -19,7 +19,7 @@ namespace AOERandomizer.ViewModel.Windows
         #region Constants
 
         private const string LOG_CTX = "AOERandomizer.ViewModel.Windows.MainWindowViewModel";
-        private const int MaxDoge = 2000;
+        private const int MaxDoge = 400;
 
         #endregion // Constants
 
