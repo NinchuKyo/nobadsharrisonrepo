@@ -32,6 +32,7 @@ namespace AOERandomizer.View.SpinningWheel
         private double _angle;
         private double _size;
         private bool _hideLabels;
+        private bool _showWheel;
 
         private static readonly BackEase BackEase;
         private static readonly CircleEase CircleEase;
@@ -70,6 +71,7 @@ namespace AOERandomizer.View.SpinningWheel
             this._pieSlices.CollectionChanged += PieSlices_CollectionChanged;
 
             this._slices = new();
+            this._showWheel = false;
             this.SetValue(SlicesDependencyProperty, this._slices);
 
             this.InitializeComponent();
@@ -194,6 +196,15 @@ namespace AOERandomizer.View.SpinningWheel
         /// </summary>
         public string SelectedItemValue => this.SelectedItem == null ? String.Empty : this.SelectedItem.Label;
 
+        /// <summary>
+        /// Gets or sets a flag indicating whether this spinning wheel is visible.
+        /// </summary>
+        public bool ShowWheel
+        {
+            get { return this._showWheel; }
+            set { this.SetProperty(ref this._showWheel, value); }
+        }
+
         #endregion // Properties
 
         #region Methods
@@ -308,6 +319,16 @@ namespace AOERandomizer.View.SpinningWheel
         {
             this._pieSlices.Clear();
 
+            if (this.Slices.Count < 2)
+            {
+                this.ShowWheel = false;
+                return;
+            }
+            else
+            {
+                this.ShowWheel = true;
+            }
+
             gridRotateTransform.CenterX = this.RenderSize.Width / 2.0;
             gridRotateTransform.CenterY = this.RenderSize.Height / 2.0;
 
@@ -400,11 +421,6 @@ namespace AOERandomizer.View.SpinningWheel
                 ObservableCollection<string> newSlices = (ObservableCollection<string>)e.NewValue;
                 newSlices.CollectionChanged += handler;
             }
-
-            /*if (wheel.IsLoaded)
-            {
-                wheel.Draw();
-            }*/
         }
 
         /// <summary>

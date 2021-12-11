@@ -14,7 +14,7 @@ namespace AOERandomizer.View.SpinningWheel
     {
         #region Constants
 
-        protected const string FaceIconsPath = $"pack://application:,,,/AOERandomizer.Multimedia;component/Resources/Images/Faces";
+        private const string FaceIconsPath = $"pack://application:,,,/AOERandomizer.Multimedia;component/Resources/Images/Faces";
 
         #endregion // Constants
 
@@ -25,10 +25,10 @@ namespace AOERandomizer.View.SpinningWheel
         private double _textBlockRotateAngle;
         private double _textBlockTranslateX;
         private double _textBlockTranslateY;
-
         private double _faceImageRotateAngle;
         private double _faceImageTranslateX;
         private double _faceImageTranslateY;
+        private ImageSource? _faceImage;
 
         #endregion // Members
 
@@ -230,25 +230,10 @@ namespace AOERandomizer.View.SpinningWheel
             set { this.SetProperty(ref this._faceImageTranslateY, value); }
         }
 
-        private ImageSource _faceImage;
-        public ImageSource FaceImage
+        public ImageSource? FaceImage
         {
             get { return this._faceImage; }
             set { this.SetProperty(ref this._faceImage, value); }
-        }
-
-        private double _faceWidth;
-        public double FaceWidth
-        {
-            get { return this._faceWidth; }
-            set { this.SetProperty(ref this._faceWidth, value); }
-        }
-
-        private double _faceHeight;
-        public double FaceHeight
-        {
-            get { return this._faceHeight; }
-            set { this.SetProperty(ref this._faceHeight, value); }
         }
 
         #endregion // Properties
@@ -276,74 +261,23 @@ namespace AOERandomizer.View.SpinningWheel
             this.FaceImageTranslateX = imgPoint.X;
             this.FaceImageTranslateY = imgPoint.Y;
 
-            string faceIcon = $"{FaceIconsPath}/{this.Label}_face.png";
-            BitmapImage faceImg = new BitmapImage(new Uri(faceIcon));
-            this.FaceImage = faceImg;
-
-            this.FaceHeight = 60.0;
-            this.FaceWidth = 60.0;
-
-            //string label = this.Label;
-            string label = String.Empty;
-            if (!String.IsNullOrWhiteSpace(label))
+            if (!String.IsNullOrWhiteSpace(this.Label))
             {
-                TransformGroup tGroup = new();
-
                 try
                 {
-                    string iconPath = $"{FaceIconsPath}/{label}_face.png";
-                    BitmapImage img = new BitmapImage(new Uri(iconPath));
-
-                    RotateTransform rTrans = new()
-                    {
-                        CenterX = 0.5,
-                        CenterY = 0.5,
-                        Angle = halfAngle
-                    };
-
-                    TranslateTransform tTrans = new()
-                    {
-                        X = imgPoint.X - 24,
-                        Y = imgPoint.Y + 15
-                    };
-
-                    tGroup.Children.Add(rTrans);
-                    //tGroup.Children.Add(tTrans);
-
-                    this.PieSlicePathFill = new ImageBrush(img)
-                    {
-                        Stretch = Stretch.Uniform,
-                        RelativeTransform = tGroup
-                    };
+                    string faceIcon = $"{FaceIconsPath}/{this.Label}_face.png";
+                    BitmapImage faceImg = new(new(faceIcon));
+                    this.FaceImage = faceImg;
                 }
                 catch (Exception)
                 {
-                    string iconPath = $"{FaceIconsPath}/unknown_face.png";
-                    BitmapImage img = new(new(iconPath));
-
-                    RotateTransform rTrans = new()
-                    {
-                        CenterX = 0.5,
-                        CenterY = 0.5,
-                        Angle = halfAngle
-                    };
-
-                    TranslateTransform tTrans = new()
-                    {
-                        X = imgPoint.X,
-                        Y = imgPoint.Y
-                    };
-
-                    tGroup.Children.Add(rTrans);
-                    tGroup.Children.Add(tTrans);
-
-                    this.PieSlicePathFill = new ImageBrush(img) { Stretch = Stretch.UniformToFill, Transform = tGroup };
+                    string faceIcon = $"{FaceIconsPath}/unknown_face.png";
+                    BitmapImage faceImg = new(new(faceIcon));
+                    this.FaceImage = faceImg;
                 }
             }
-            else
-            {
-                this.PieSlicePathFill = new SolidColorBrush(this.BackgroundColor);
-            }
+
+            this.PieSlicePathFill = new SolidColorBrush(this.BackgroundColor);
         }
 
         #endregion // Methods

@@ -5,11 +5,15 @@
                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                            xmlns:controls="clr-namespace:AOERandomizer.View.SpinningWheel.Base"
+                                           xmlns:converters="clr-namespace:AOERandomizer.View.Converters"
                                            mc:Ignorable="d"
                                            d:DesignHeight="450"
                                            d:DesignWidth="800"
                                            Loaded="SpinningWheelControl_Loaded">
     <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisConverter"
+                                                 True="Visible"
+                                                 False="Collapsed"/>
         <Storyboard x:Key="storyBoard">
             <DoubleAnimation Storyboard.TargetName="gridRotateTransform"
                              Storyboard.TargetProperty="(Angle)"
@@ -17,12 +21,20 @@
         </Storyboard>
     </UserControl.Resources>
     
-    <StackPanel x:Name="layoutRoot">
+    <Grid x:Name="layoutRoot"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch">
+        <Image Panel.ZIndex="6"
+               Height="200"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Visibility="{Binding ElementName=spinningWheelControl, Path=ShowWheel, Converter={StaticResource BoolToVisConverter}, UpdateSourceTrigger=PropertyChanged}"
+               Source="/AOERandomizer.Multimedia;component/Resources/Images/wheel_arrow.png" />
         <Grid x:Name="layoutSpinner">
             <Grid.RenderTransform>
                 <RotateTransform x:Name="gridRotateTransform"
                                  Angle="{Binding ElementName=spinningWheelControl, Mode=TwoWay, Path=Angle}" />
             </Grid.RenderTransform>
         </Grid>
-    </StackPanel>
+    </Grid>
 </controls:NotifyPropertyChangedUserControl>
